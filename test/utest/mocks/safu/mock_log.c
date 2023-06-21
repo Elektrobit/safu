@@ -4,8 +4,7 @@
 
 #include <stdio.h>
 
-// Note: safuLogFuncV is not for direct usage, it exists to make safuLogFuncF
-// mocking possible, so we do not mock it
+// Note: safuLogFuncV is not for direct usage, it exists to make safuLogFuncF mocking possible, so we do not mock it
 
 MOCK_FUNC_BODY(safuLogFuncF, safuLogStatusE_t, safuLogLevelE_t level, const char *file, const char *func,
                unsigned int line, const char *fmt, ...) {

@@ -12,10 +12,9 @@
 #include <stdlib.h>
 #include <strings.h>
 
-// The compiler doesn't let us use stdout/stderr in static initializers for some
-// bizarre reason, using these flags is the 'cleanest' solution, everything else
-// depends on the compiler or involves checking for initialization with every
-// single function call, which we should avoid here
+// The compiler doesn't let us use stdout/stderr in static initializers for some bizarre reason,
+// using these flags is the 'cleanest' solution, everything else depends on the compiler or involves
+// checking for initialization with every single function call, which we should avoid here
 #define USE_STDOUT_STREAM   0x80000000
 #define USE_STDERR_STREAM   0x40000000
 #define USE_STD_STREAM_MASK 0xC0000000

@@ -46,9 +46,7 @@ static void _testCase(struct json_object *jobj, const char *key, struct timespec
 
 void safuTestSafuJsonAddNewTimestampErrInsertNSecObject(void **state) {
     TEST("safuJsonAddNewTimestamp");
-    SHOULD("%s",
-           "fail to insert the nano seconds into a json timestamp for a "
-           "json object");
+    SHOULD("%s", "fail to insert the nano seconds into a json timestamp for a json object");
 
     *(struct json_object **)state = json_object_new_object();
     struct json_object *jobj = *(struct json_object **)state;

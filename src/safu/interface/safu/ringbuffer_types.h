@@ -30,8 +30,8 @@ typedef struct safuRingBufferCallback {
  *
  * Members:
  *  flags: Indicate the current status of the ringbuffer.
- *          SAFU_FLAG_INITIALIZED_BIT – successfully initialized and ready to
- * use SAFU_FLAG_NONE – uninitilized or deleted ready for removal
+ *          SAFU_FLAG_INITIALIZED_BIT – successfully initialized and ready to use
+ *          SAFU_FLAG_NONE – uninitilized or deleted ready for removal
  *          SAFU_RINGBUFFER_DELETE_ENTRIES_BIT – TODO
  *  memorySize: actual size acquired in bytes
  *  elements: number of elements can be stored

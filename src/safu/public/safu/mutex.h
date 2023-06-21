@@ -23,8 +23,7 @@
         __fail_command;                                                     \
     }
 
-// We have to unlock the mutex here prior to destroying it to prevent undefined
-// behavior according to POSIX
+// We have to unlock the mutex here prior to destroying it to prevent undefined behavior according to POSIX
 #define SAFU_PTHREAD_MUTEX_DESTROY(__mutex, __fail_command)                      \
     if (pthread_mutex_unlock(__mutex) < 0) {                                     \
         safuLogCritF("pthread_mutex_unlock failed! - %s", strerror(errno));      \

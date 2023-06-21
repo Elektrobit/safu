@@ -23,9 +23,8 @@ void safuTestSafuRingBufferNewSuccess(void **state) {
     result = safuRingBufferNew(&test->ringBuffer, &param);
     assert_int_equal(result, SAFU_RESULT_OK);
     assert_non_null(test->ringBuffer);
-    // We only test one variable here to verify that safuRingBufferInitialize was
-    // called A more comprehensive test of the initialized struct is done in the
-    // test for safuRingBufferInitialize
+    // We only test one variable here to verify that safuRingBufferInitialize was called
+    // A more comprehensive test of the initialized struct is done in the test for safuRingBufferInitialize
     assert_int_equal(test->ringBuffer->elements, _TEST_ELEMENTS);
 
     result = safuRingBufferDelete(&test->ringBuffer);

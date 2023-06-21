@@ -26,9 +26,7 @@ static void _testCase(struct json_object *jobj, char *key, int32_t val) {
 
 void safuTestSafuJsonGetInt32ErrGetIntObject(void **state) {
     TEST("safuJsonGetInt32");
-    SHOULD("%s",
-           "return -1 when json_object_get_int fails and sets errno on a "
-           "json object");
+    SHOULD("%s", "return -1 when json_object_get_int fails and sets errno on a json object");
 
     *(struct json_object **)state = json_object_new_object();
     struct json_object *jobj = *(struct json_object **)state;

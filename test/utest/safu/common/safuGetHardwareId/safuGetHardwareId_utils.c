@@ -3,8 +3,7 @@
 
 #include "safuGetHardwareId_utest.h"
 
-// The contents of this file should be moved into a generic mock interface at
-// some point
+// The contents of this file should be moved into a generic mock interface at some point
 
 MOCK_FUNC_VAR_NEW(safuReadFileToString);
 ssize_t __genuine_safuReadFileToString(const char *fileName, ssize_t maxLength, char **string);

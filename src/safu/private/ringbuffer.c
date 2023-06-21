@@ -207,8 +207,7 @@ static void _copyData(safuRingBuffer_t *ringBuffer, void **newData) {
     if (ringBuffer->elementsWritten <= elements) {
         memcpy(newData, oldData, ringBuffer->memorySize);
     } else {
-        // Linearize out of order elements after an overflow, e.g. {6,7,3,4,5} =>
-        // {3,4,5,6,7}
+        // Linearize out of order elements after an overflow, e.g. {6,7,3,4,5} => {3,4,5,6,7}
         size_t const elementSize = SAFU_RINGBUFFER_ELEMENT_SIZE;
         size_t const elementsOlder = (elements - 1 - curIdx);
         size_t const idxOlder = (curIdx + 1);

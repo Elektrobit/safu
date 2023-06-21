@@ -51,8 +51,8 @@ ssize_t safuTransferExactly(int fd, void *buf, size_t len, int flags,
                 switch (errno) {
                     case EINTR:
                     case EAGAIN:
-// POSIX.1-2001 allows either EAGAIN or EWOULDBLOCK to be returned on blocking
-// socket, which might have the same value on some platforms.
+// POSIX.1-2001 allows either EAGAIN or EWOULDBLOCK to be returned on blocking socket,
+// which might have the same value on some platforms.
 #if EAGAIN != EWOULDBLOCK
                     case EWOULDBLOCK:
 #endif
@@ -251,9 +251,8 @@ const char *safuGetHardwareId(void) {
         bool useCache = true;
         ssize_t bytes;
 
-        // These getenv() calls are a temporary solution until safu_config_t is
-        // implemented, which will come with an ability to ignore environment
-        // variables completely
+        // These getenv() calls are a temporary solution until safu_config_t is implemented,
+        // which will come with an ability to ignore environment variables completely
 
         envValue = getenv(SAFU_HARDWAREID_ENVIRONMENT_PREFIX "CACHE");
         if ((envValue != NULL) && (strncmp(envValue, "0", 2) == 0)) {
@@ -270,9 +269,7 @@ const char *safuGetHardwareId(void) {
         bytes = safuReadFileToString(hardwareIdFile, maxLength, &buffer);
         if (bytes < minLength) {
             if (bytes < 0) {
-                const char err[] =
-                    "safuReadFileToString failed, using default value "
-                    "'%s' (file: '%s')";
+                const char err[] = "safuReadFileToString failed, using default value '%s' (file: '%s')";
                 safuLogErrF(err, SAFU_HARDWAREID_DEFAULT_VALUE, hardwareIdFile);
             } else {
                 const char err[] = "hardwareId too short (%ld), using default value '%s' (file: '%s')";

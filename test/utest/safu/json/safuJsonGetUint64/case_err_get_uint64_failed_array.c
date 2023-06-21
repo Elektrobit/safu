@@ -24,9 +24,7 @@ static void _testCase(struct json_object *jarray, size_t idx, uint64_t val) {
 
 void safuTestSafuJsonGetUint64ErrGetUint64FailedArray(void **state) {
     TEST("safuJsonGetUint64");
-    SHOULD("%s",
-           "return -1 when json_object_get_int fails and sets errno on a "
-           "json array");
+    SHOULD("%s", "return -1 when json_object_get_int fails and sets errno on a json array");
 
     *(struct json_object **)state = json_object_new_array();
     struct json_object *jarray = *(struct json_object **)state;

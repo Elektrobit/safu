@@ -25,8 +25,7 @@ void safuTestSafuGetHardwareIdErrFile(UNUSED void **state) {
     SHOULD("%s", "test safuGetHardwareId()'s reaction to file reading errors");
 
     // In this test we're only interested in safuGetHardwareId()'s reactions
-    // to failed safuReadFileToString() calls, so we can ignore its parameters
-    // here
+    // to failed safuReadFileToString() calls, so we can ignore its parameters here
     expect_any_always(safuReadFileToString, fileName);
     expect_any_always(safuReadFileToString, maxLength);
     expect_any_always(safuReadFileToString, string);

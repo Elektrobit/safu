@@ -4,9 +4,7 @@
 
 void safuTestSafuLogLevelFromStringErrInvalidLogLevel(UNUSED void **state) {
     TEST("safuLogLevelFromString");
-    SHOULD("%s",
-           "return SAFU_LOG_LEVEL_INVALID on string not representing a "
-           "valid log level");
+    SHOULD("%s", "return SAFU_LOG_LEVEL_INVALID on string not representing a valid log level");
 
     const char *testInput[] = {"SAFU_LOG_LEVEL_NONE",
                                "SAFU_LOG_LEVEL_CRIT",

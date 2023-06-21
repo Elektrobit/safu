@@ -4,9 +4,8 @@
 
 #define _TEST_ELEMENTS 5
 
-// This function exists here as a workaround to verify that
-// safuRingBufferDeleteMembers was called. It is properly tested in the test for
-// safuRingBufferDeleteMembers.
+// This function exists here as a workaround to verify that safuRingBufferDeleteMembers was called.
+// It is properly tested in the test for safuRingBufferDeleteMembers.
 static safuResultE_t _dummyDeleteFunc(void *element) {
     size_t *value = (size_t *)element;
     *value = 42;
@@ -21,8 +20,7 @@ int safuTestSafuRingBufferDeleteSuccessSetup(void **state) {
     result = safuRingBufferNew(&test->ringBuffer, &param);
     assert_int_equal(result, SAFU_RESULT_OK);
 
-    // Write a dummy value to ensure our _dummyDeleteFunc gets called during the
-    // safuRingBufferDeleteMembers call
+    // Write a dummy value to ensure our _dummyDeleteFunc gets called during the safuRingBufferDeleteMembers call
     test->value = 0;
     result = safuRingBufferWrite(test->ringBuffer, &test->value);
     assert_int_equal(result, SAFU_RESULT_OK);

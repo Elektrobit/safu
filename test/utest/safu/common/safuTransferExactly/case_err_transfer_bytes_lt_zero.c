@@ -15,9 +15,7 @@ void safuTestSafuTransferExactlyErrSendBytesLtZero(UNUSED void **state) {
     errno = EINVAL;
 
     TEST("safuTransferExactly");
-    SHOULD("%s",
-           "return transfered bytes if the transfer function returns a "
-           "value lower than zero");
+    SHOULD("%s", "return transfered bytes if the transfer function returns a value lower than zero");
 
     expect_value(safuMockTransferFunc, fd, fileDescriptor);
     expect_value(safuMockTransferFunc, buf, buffer);

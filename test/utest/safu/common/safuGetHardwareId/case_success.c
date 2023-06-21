@@ -62,13 +62,12 @@ void safuTestSafuGetHardwareIdSuccess(UNUSED void **state) {
     TEST("safuGetHardwareId");
     SHOULD("%s", "test safuGetHardwareId()'s basic functionality");
 
-    // Run the test for the first time, read from a tempfile set by the
-    // environment
+    // Run the test for the first time, read from a tempfile set by the environment
     hardwareId = safuGetHardwareId();
     assert_string_equal(hardwareId, TEST_HARDWAREID);
 
-    // Run the test for the second time using an invalid environment filename this
-    // time. The test should still succeed, as we're using the buffered value now
+    // Run the test for the second time using an invalid environment filename this time.
+    // The test should still succeed, as we're using the buffered value now
     retval = setenv(HARDWAREID_FILE, "/abdefg/abcdefg/gfedcba", 1);
     assert_false(retval < 0);
 

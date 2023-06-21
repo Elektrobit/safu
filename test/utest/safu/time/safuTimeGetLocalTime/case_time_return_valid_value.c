@@ -140,9 +140,7 @@ static void _testSafuTimeGetLocalTimeTimeReturnValidValueParam(time_t testTimeSt
 
 void safuTestSafuTimeGetLocalTimeTimeReturnValidValue(UNUSED void **state) {
     TEST("safuTimeGetLocalTime");
-    SHOULD("%s",
-           "fill a provided struct tm with the current date and time "
-           "obtained from time()");
+    SHOULD("%s", "fill a provided struct tm with the current date and time obtained from time()");
     for (size_t i = 0; i < ARRAY_SIZE(safuTestData); i++) {
         _testSafuTimeGetLocalTimeTimeReturnValidValueParam(safuTestData[i].testTimeStamp,
                                                            &safuTestData[i].expectedDate);
