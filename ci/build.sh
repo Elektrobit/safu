@@ -3,11 +3,9 @@ set -e -u
 
 CMD_PATH=$(realpath $(dirname $0))
 BASE_DIR=${CMD_PATH%/*}
-REPO_ROOT_DIR="$BASE_DIR/.."
 CMAKE_PARAM=${CMAKE_PARAM:-""}
 NINJA_PARAM=${NINJA_PARAM:-"-j$(nproc)"}
-
-export LC_ALL=C
+DEPENDENCY_DIR="$BASE_DIR/build/dependency"
 
 PARAM=""
 OPTION_CI=0
@@ -47,7 +45,9 @@ if [ $OPTION_PACKAGE -eq 1 ]; then
     OPTION_CLEAN=1
 fi
 
-BUILD_DIR="$BASE_DIR/build/$BUILD_TYPE/"
+CMAKE_PARAM="${CMAKE_PARAM} -D SOURCING=$SOURCES_URI"
+
+BUILD_DIR="$BASE_DIR/build/$BUILD_TYPE"
 RESULT_DIR="$BUILD_DIR/result"
 DIST_DIR="$BUILD_DIR/dist"
 CMAKE_BUILD_DIR="$BUILD_DIR/cmake"
@@ -66,12 +66,6 @@ if [ $OPTION_VERBOSE -eq 1 ]; then
     NINJA_PARAM="$NINJA_PARAM -v"
 fi
 
-DEPENDENCIES="cmocka_mocks cmocka_extensions"
-for dependency in $DEPENDENCIES; do
-    declare -x ${dependency}_DIR="$LOCAL_INSTALL_DIR/usr/local/lib/cmake/${dependency}"
-    $REPO_ROOT_DIR/${dependency}/ci/build.sh $BUILD_TYPE $DEP_BUILD_PARAM
-done
-
 echo -e "\n#### Building $(basename $BASE_DIR) ($BUILD_TYPE) ####"
 mkdir -p $RESULT_DIR $DIST_DIR
 if [ ! -e $CMAKE_BUILD_DIR/build.ninja ]; then
@@ -83,6 +77,6 @@ ninja -C $CMAKE_BUILD_DIR $NINJA_PARAM all install 2>&1 | tee $RESULT_DIR/build_
 
 re=${PIPESTATUS[0]}
 
-$REPO_ROOT_DIR/shared/ci/check_build_log.py $RESULT_DIR/build_log.txt
+$BASE_DIR/ci/check_build_log.py $RESULT_DIR/build_log.txt
 
 exit $re
