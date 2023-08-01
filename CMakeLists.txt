@@ -1,16 +1,14 @@
 # SPDX-License-Identifier: MIT
 cmake_minimum_required(VERSION 3.21)
 include(cmake/project.cmake)
-include(cmake/FetchLibrary.cmake)
+include(cmake/ConfigureLibrary.cmake)
 
 project(safu LANGUAGES C VERSION ${SAFU_VERSION})
 
-list(APPEND CMAKE_PREFIX_PATH "${CMAKE_SOURCE_DIR}/build/${CMAKE_BUILD_TYPE}/dist/usr/local/lib/cmake")
+configureLibrary(cmocka_extensions ${CMOCKA_EXTENSIONS_URI} ${CMOCKA_EXTENSIONS_REF})
+configureLibrary(cmocka_mocks ${CMOCKA_MOCKS_URI} ${CMOCKA_MOCKS_REF})
 
-if(DEFINED SOURCING)
-  fetchLibrary(cmocka-extensions ${SOURCING}/cmocka-extensions.git  "fs/rename-doc-target")
-  fetchLibrary(cmocka-mocks ${SOURCING}/cmocka-mocks.git  "fs/rename-doc-target")
-endif(DEFINED SOURCING)
+list(APPEND CMAKE_PREFIX_PATH "${CMAKE_SOURCE_DIR}/build/${CMAKE_BUILD_TYPE}/dist/usr/local/lib/cmake")
 
 project_set_environment()
 project_set_version_variables()
