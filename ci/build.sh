@@ -5,7 +5,6 @@ CMD_PATH=$(realpath $(dirname $0))
 BASE_DIR=${CMD_PATH%/*}
 CMAKE_PARAM=${CMAKE_PARAM:-""}
 NINJA_PARAM=${NINJA_PARAM:-"-j$(nproc)"}
-DEPENDENCY_DIR="$BASE_DIR/build/dependency"
 SOURCES_URI=${SOURCES_URI:-https://github.com/emlix/}
 
 CMOCKA_EXTENSIONS_REPO_REF="fs/rename-doc-target"
