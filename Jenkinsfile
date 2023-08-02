@@ -33,7 +33,7 @@ pipeline {
 
   agent {
     dockerfile {
-        filename './safu/ci/Dockerfile'
+        filename './ci/Dockerfile'
         reuseNode true
         additionalBuildArgs "--build-arg USER=jenkins \
                         --build-arg UID=\$(id -u) --build-arg GID=\$(id -g) --build-arg ASMCOV_URI=${ASMCOV_URI}"
@@ -59,14 +59,14 @@ pipeline {
           debug: {
             gitlabCommitStatus("safu: build debug") {
               sh '''#!/bin/bash -xe
-                ./safu/ci/build.sh --ci Debug
+                ./ci/build.sh --ci Debug
               '''
             }
           },
           release: {
             gitlabCommitStatus("safu: build release") {
               sh '''#!/bin/bash -xe
-                ./safu/ci/build.sh --ci Release
+                ./ci/build.sh --ci Release
               '''
             }
           }
@@ -79,12 +79,12 @@ pipeline {
         parallel(
           debug: {
             gitlabCommitStatus("safu: utest debug") {
-              sh './safu/ci/run_utest.sh'
+              sh './ci/run_utest.sh'
             }
           },
           release: {
             gitlabCommitStatus("safu: utest release") {
-              sh './safu/ci/run_utest.sh Release'
+              sh './ci/run_utest.sh Release'
             }
           }
         )
@@ -100,15 +100,15 @@ pipeline {
       steps{
         gitlabCommitStatus("safu: lint sources") {
           sh '''#!/bin/bash -xe
-            export IGNORE_SOURCES="safu/src/safu/include/safu/mutex.h"
-            ./safu/ci/code_lint.py --ci
-            ./safu/ci/checklicense.sh
+            export IGNORE_SOURCES="src/safu/include/safu/mutex.h"
+            ./ci/code_lint.py --ci
+            ./ci/checklicense.sh
           '''
         }
       }
       post {
         always {
-          archiveArtifacts artifacts: "safu/build/Release/cmake/lint_results/**", fingerprint: true
+          archiveArtifacts artifacts: "build/Release/cmake/lint_results/**", fingerprint: true
         }
       }
     }
@@ -116,12 +116,12 @@ pipeline {
     stage('Build documentation') {
       steps{
         gitlabCommitStatus("safu: documentation") {
-          sh './safu/ci/build_doc.sh'
+          sh './ci/build_doc.sh'
         }
       }
       post {
         success {
-          archiveArtifacts artifacts: "safu/doc/build/**", fingerprint: true
+          archiveArtifacts artifacts: "doc/build/**", fingerprint: true
         }
       }
     }
@@ -130,13 +130,13 @@ pipeline {
       steps {
         gitlabCommitStatus("safu: coverage") {
           sh '''#!/bin/bash -xe
-            ./safu/ci/create_coverage.sh
+            ./ci/create_coverage.sh
           '''
         }
       }
       post {
         always {
-          archiveArtifacts artifacts: "safu/build/Release/result/coverage_results/**", fingerprint: true
+          archiveArtifacts artifacts: "build/Release/result/coverage_results/**", fingerprint: true
         }
       }
     }
@@ -179,7 +179,7 @@ pipeline {
     }
     always {
       withCredentials([usernamePassword(credentialsId: 'kpi_creds', passwordVariable: 'KPI_API_TOKEN', usernameVariable: 'KPI_API_URL')]) {
-        sh './safu/ci/publish_kpis.sh'
+        sh './ci/publish_kpis.sh'
       }
       cleanWs(deleteDirs: true, patterns: [
           [pattern: '*', type: 'INCLUDE'],
