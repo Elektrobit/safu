@@ -10,18 +10,18 @@
  * C99 standard (ISO/IEC 9899:1999): 7.23.1/3 Components of time (p: 338)
  * in bits/types/struct_tm.h
  */
-#define SINCE_1900          1900
-#define SINCE_JANUARY       1
-#define SINCE_SUNDAY        1
+#define SINCE_1900 1900
+#define SINCE_JANUARY 1
+#define SINCE_SUNDAY 1
 #define SINCE_JANUARY_FIRST 1
 
 typedef struct safuTestState {
-    char *timezone;
+  char *timezone;
 } safuTestState_t;
 
 static struct safuTestData {
-    time_t testTimeStamp;
-    struct tm expectedDate;
+  time_t testTimeStamp;
+  struct tm expectedDate;
 } safuTestData[] = {
     {
         .testTimeStamp = 1640995200,
@@ -86,63 +86,65 @@ static struct safuTestData {
 };
 
 int safuTestSafuTimeGetLocalTimeTimeReturnValidValueSetup(void **state) {
-    safuTestState_t *testState = calloc(1, sizeof(safuTestState_t));
-    if (testState == NULL) {
-        return -1;
-    }
-    *state = testState;
+  safuTestState_t *testState = calloc(1, sizeof(safuTestState_t));
+  if (testState == NULL) {
+    return -1;
+  }
+  *state = testState;
 
-    testState->timezone = getenv("TZ");
-    setenv("TZ", "UTC", 1);
-    tzset();
-    return 0;
+  testState->timezone = getenv("TZ");
+  setenv("TZ", "UTC", 1);
+  tzset();
+  return 0;
 }
 
 int safuTestSafuTimeGetLocalTimeTimeReturnValidValueTeardown(void **state) {
-    safuTestState_t *testState = *state;
-    if (testState->timezone == NULL) {
-        unsetenv("TZ");
-    } else {
-        setenv("TZ", testState->timezone, 1);
-    }
-    tzset();
-    free(testState);
-    return 0;
+  safuTestState_t *testState = *state;
+  if (testState->timezone == NULL) {
+    unsetenv("TZ");
+  } else {
+    setenv("TZ", testState->timezone, 1);
+  }
+  tzset();
+  free(testState);
+  return 0;
 }
 
-static void _testSafuTimeGetLocalTimeTimeReturnValidValueParam(time_t testTimeStamp, const struct tm *expectedDate) {
-    struct tm testTime = {0};
+static void _testSafuTimeGetLocalTimeTimeReturnValidValueParam(
+    time_t testTimeStamp, const struct tm *expectedDate) {
+  struct tm testTime = {0};
 
-    PARAM("timestamp == %ld", testTimeStamp);
+  PARAM("timestamp == %ld", testTimeStamp);
 
-    MOCK_FUNC_AFTER_CALL(time, 0);
+  MOCK_FUNC_AFTER_CALL(time, 0);
 
-    expect_any(__wrap_time, timer);
-    will_set_parameter(__wrap_time, timer, testTimeStamp);
-    will_return(__wrap_time, testTimeStamp);
+  expect_any(__wrap_time, timer);
+  will_set_parameter(__wrap_time, timer, testTimeStamp);
+  will_return(__wrap_time, testTimeStamp);
 
-    safuResultE_t result = safuTimeGetLocalTime(&testTime);
+  safuResultE_t result = safuTimeGetLocalTime(&testTime);
 
-    assert_int_equal(result, SAFU_RESULT_OK);
+  assert_int_equal(result, SAFU_RESULT_OK);
 
-    assert_int_equal(testTime.tm_year, expectedDate->tm_year);
-    assert_int_equal(testTime.tm_mon, expectedDate->tm_mon);
-    assert_int_equal(testTime.tm_wday, expectedDate->tm_wday);
-    assert_int_equal(testTime.tm_mday, expectedDate->tm_mday);
-    assert_int_equal(testTime.tm_yday, expectedDate->tm_yday);
+  assert_int_equal(testTime.tm_year, expectedDate->tm_year);
+  assert_int_equal(testTime.tm_mon, expectedDate->tm_mon);
+  assert_int_equal(testTime.tm_wday, expectedDate->tm_wday);
+  assert_int_equal(testTime.tm_mday, expectedDate->tm_mday);
+  assert_int_equal(testTime.tm_yday, expectedDate->tm_yday);
 
-    assert_int_equal(testTime.tm_hour, expectedDate->tm_hour);
-    assert_int_equal(testTime.tm_min, expectedDate->tm_min);
-    assert_int_equal(testTime.tm_sec, expectedDate->tm_sec);
+  assert_int_equal(testTime.tm_hour, expectedDate->tm_hour);
+  assert_int_equal(testTime.tm_min, expectedDate->tm_min);
+  assert_int_equal(testTime.tm_sec, expectedDate->tm_sec);
 
-    assert_int_equal(testTime.tm_isdst, expectedDate->tm_isdst);
+  assert_int_equal(testTime.tm_isdst, expectedDate->tm_isdst);
 }
 
 void safuTestSafuTimeGetLocalTimeTimeReturnValidValue(UNUSED void **state) {
-    TEST("safuTimeGetLocalTime");
-    SHOULD("%s", "fill a provided struct tm with the current date and time obtained from time()");
-    for (size_t i = 0; i < ARRAY_SIZE(safuTestData); i++) {
-        _testSafuTimeGetLocalTimeTimeReturnValidValueParam(safuTestData[i].testTimeStamp,
-                                                           &safuTestData[i].expectedDate);
-    }
+  TEST("safuTimeGetLocalTime");
+  SHOULD("%s", "fill a provided struct tm with the current date and time "
+               "obtained from time()");
+  for (size_t i = 0; i < ARRAY_SIZE(safuTestData); i++) {
+    _testSafuTimeGetLocalTimeTimeReturnValidValueParam(
+        safuTestData[i].testTimeStamp, &safuTestData[i].expectedDate);
+  }
 }

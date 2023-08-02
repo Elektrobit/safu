@@ -3,17 +3,17 @@
 #include "vector_helper.h"
 
 void safuTestSafuVecPopSuccess(UNUSED void **state) {
-    safuVec_t vec = {0};
-    uint32_t count = 10;
+  safuVec_t vec = {0};
+  uint32_t count = 10;
 
-    safuVecCreate(&vec, count, sizeof(safuTdata_t));
-    safuFillVecSafuTData(&vec, count);
+  safuVecCreate(&vec, count, sizeof(safuTdata_t));
+  safuFillVecSafuTData(&vec, count);
 
-    for (; count > 0; count--) {
-        int result = safuVecPop(&vec);
+  for (; count > 0; count--) {
+    int result = safuVecPop(&vec);
 
-        assert_int_equal(0, result);
-        assert_int_equal(count - 1, vec.elementCount);
-    }
-    safuVecFree(&vec);
+    assert_int_equal(0, result);
+    assert_int_equal(count - 1, vec.elementCount);
+  }
+  safuVecFree(&vec);
 }

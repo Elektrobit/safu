@@ -2,9 +2,9 @@
 #include "safuTimeGetLocalTime_utest.h"
 
 int main() {
-    const struct CMUnitTest tests[] = {
-        TEST_CASE(safuTestSafuTimeGetLocalTimeTimeReturnValidValue),
-    };
+  const struct CMUnitTest tests[] = {
+      TEST_CASE(safuTestSafuTimeGetLocalTimeTimeReturnValidValue),
+  };
 
-    return cmocka_run_group_tests(tests, NULL, NULL);
+  return cmocka_run_group_tests(tests, NULL, NULL);
 }
