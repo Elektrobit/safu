@@ -78,7 +78,6 @@ pipeline {
           debug: {
             gitlabCommitStatus("safu: build debug") {
               sh '''#!/bin/bash -xe
-                export SOURCES_URI="${SOURCES_URI}"
                 env
                 ./ci/build.sh --ci Debug
               '''
@@ -87,7 +86,6 @@ pipeline {
           release: {
             gitlabCommitStatus("safu: build release") {
               sh '''#!/bin/bash -xe
-                export SOURCES_URI="${SOURCES_URI}"
                 env
                 ./ci/build.sh --ci Release
               '''
