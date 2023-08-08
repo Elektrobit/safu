@@ -1,19 +1,11 @@
 # SPDX-License-Identifier: MIT
 cmake_minimum_required(VERSION 3.21)
 
-include_guard(GLOBAL)
-set(CONFIGURED_LIBRARIES_LIST "")
-
 include(FetchContent)
 set(FETCHCONTENT_QUIET OFF)
 set(FETCHCONTENT_TRY_FIND_PACKAGE_MODE ALWAYS)
 
 function(configureLibrary LIBRARY_NAME LIBRARY_REPOSITORY LIBRARY_TAG)
-  if(${LIBRARY_NAME} IN_LIST CONFIGURED_LIBRARIES_LIST)
-	return()
-  endif()
-  LIST(APPEND CONFIGURED_LIBRARIES_LIST ${LIBRARY_NAME})
-
   message("#### Configuring external library ${LIBRARY_NAME} (${CMAKE_BUILD_TYPE}) ####")
 
   message("Searching for ${LIBRARY_NAME}")
