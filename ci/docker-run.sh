@@ -33,8 +33,8 @@ if [ "$SSH_AUTH_SOCK" ]; then
 fi
 
 docker run --rm -it $SSH_AGENT_OPTS \
-    -v $BASE_DIR/..:/base \
-    -w /base \
+    -v $BASE_DIR/..:/base/safu \
+    -w /base/safu \
     --privileged \
     --device=/dev/kmsg \
     $IMAGE_NAME $@
