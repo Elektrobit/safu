@@ -19,3 +19,4 @@ compile_commands.json
 **/build
 **/build-*
 dist-*
+**/generated

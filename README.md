@@ -15,7 +15,7 @@ make -C ./build install
 or use the CI hooks
 
 ```bash
-./safu/ci/build.sh [Release]
+./ci/build.sh [Release]
 ```
 
 ### Workspace setup
