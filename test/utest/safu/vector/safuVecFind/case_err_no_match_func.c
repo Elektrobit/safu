@@ -5,17 +5,17 @@
 #include "vector_helper.h"
 
 void safuTestSafuVecFindErrNoMatchFunc(UNUSED void **state) {
-  safuVec_t vec = {0};
+    safuVec_t vec = {0};
 
-  safuVecCreate(&vec, 10, sizeof(uint32_t));
+    safuVecCreate(&vec, 10, sizeof(uint32_t));
 
-  safuFillVecUint32(&vec, 6);
+    safuFillVecUint32(&vec, 6);
 
-  uint32_t idx;
-  uint32_t val = 4;
+    uint32_t idx;
+    uint32_t val = 4;
 
-  int result = safuVecFind(&vec, 0, NULL, &val, &idx);
-  assert_int_equal(result, -1);
+    int result = safuVecFind(&vec, 0, NULL, &val, &idx);
+    assert_int_equal(result, -1);
 
-  safuVecFree(&vec);
+    safuVecFree(&vec);
 }

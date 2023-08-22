@@ -7,7 +7,7 @@
 #include "safu/ringbuffer.h"
 
 typedef struct safuUnitTestState {
-  safuRingBuffer_t *ringBuffer;
+    safuRingBuffer_t *ringBuffer;
 } safuUnitTestState_t;
 
 TEST_CASE_FUNC_PROTOTYPES(safuTestSafuRingBufferNewErrParam)

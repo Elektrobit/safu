@@ -7,15 +7,13 @@
 // some point
 
 MOCK_FUNC_VAR_NEW(safuReadFileToString);
-ssize_t __genuine_safuReadFileToString(const char *fileName, ssize_t maxLength,
-                                       char **string);
-ssize_t safuReadFileToString(const char *fileName, ssize_t maxLength,
-                             char **string) {
-  if (MOCK_IS_ACTIVE(safuReadFileToString)) {
-    check_expected_ptr(fileName);
-    check_expected(maxLength);
-    check_expected_ptr(string);
-    return mock_type(ssize_t);
-  }
-  return __genuine_safuReadFileToString(fileName, maxLength, string);
+ssize_t __genuine_safuReadFileToString(const char *fileName, ssize_t maxLength, char **string);
+ssize_t safuReadFileToString(const char *fileName, ssize_t maxLength, char **string) {
+    if (MOCK_IS_ACTIVE(safuReadFileToString)) {
+        check_expected_ptr(fileName);
+        check_expected(maxLength);
+        check_expected_ptr(string);
+        return mock_type(ssize_t);
+    }
+    return __genuine_safuReadFileToString(fileName, maxLength, string);
 }

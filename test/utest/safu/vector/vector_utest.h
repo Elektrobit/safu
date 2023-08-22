@@ -4,6 +4,6 @@
 #include <safu/vector.h>
 
 typedef struct safuTdata {
-  uint32_t val;
-  char str[32];
+    uint32_t val;
+    char str[32];
 } safuTdata_t;

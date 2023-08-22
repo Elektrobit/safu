@@ -7,8 +7,8 @@
 typedef int(safuVecFunc_t)(const void *, const void *);
 
 typedef struct safuVec {
-  size_t memorySize;
-  size_t elementSize;
-  uint32_t elementCount;
-  void *data;
+    size_t memorySize;
+    size_t elementSize;
+    uint32_t elementCount;
+    void *data;
 } safuVec_t;

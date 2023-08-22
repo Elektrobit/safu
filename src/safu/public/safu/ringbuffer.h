@@ -23,15 +23,10 @@
  *                      - SAFU_RESULT_OK – on success
  *                      - SAFU_RESULT_FAILED – if creation failed for any reason
  */
-safuResultE_t safuRingBufferNew(safuRingBuffer_t **ringBuffer,
-                                safuRingBufferParam_t const *const param);
-safuResultE_t
-safuRingBufferInitialize(safuRingBuffer_t *ringBuffer,
-                         safuRingBufferParam_t const *const param);
+safuResultE_t safuRingBufferNew(safuRingBuffer_t **ringBuffer, safuRingBufferParam_t const *const param);
+safuResultE_t safuRingBufferInitialize(safuRingBuffer_t *ringBuffer, safuRingBufferParam_t const *const param);
 safuResultE_t safuRingBufferDeleteMembers(safuRingBuffer_t *ringBuffer);
 safuResultE_t safuRingBufferDelete(safuRingBuffer_t **ringBuffer);
 
 safuResultE_t safuRingBufferWrite(safuRingBuffer_t *ringBuffer, void *element);
-safuResultE_t safuRingBufferRead(safuRingBuffer_t *ringBuffer,
-                                 safuVec_t *elementVector,
-                                 size_t *elementsWritten);
+safuResultE_t safuRingBufferRead(safuRingBuffer_t *ringBuffer, safuVec_t *elementVector, size_t *elementsWritten);
