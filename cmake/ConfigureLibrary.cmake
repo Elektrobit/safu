@@ -29,7 +29,7 @@ function(configureLibrary LIBRARY_NAME LIBRARY_REPOSITORY LIBRARY_TAG)
     )
     FetchContent_MakeAvailable(${LIBRARY_NAME})
 
-    SET(LOCAL_REPO_DIR ${CMAKE_SOURCE_DIR}/build/${CMAKE_BUILD_TYPE}/cmake/_deps/${LIBRARY_NAME}-src/)
+    SET(LOCAL_REPO_DIR ${CMAKE_CURRENT_BINARY_DIR}/_deps/${LIBRARY_NAME}-src/)
 
     while(NOT EXISTS ${LOCAL_REPO_DIR}/ci/build.sh)
       execute_process(COMMAND ${CMAKE_COMMAND} -E sleep 0.5)
@@ -40,7 +40,7 @@ function(configureLibrary LIBRARY_NAME LIBRARY_REPOSITORY LIBRARY_TAG)
 
   message("Building ${LIBRARY_NAME}")
 
-  set(ENV{LOCAL_INSTALL_DIR} ${CMAKE_SOURCE_DIR}/build/${CMAKE_BUILD_TYPE}/dist)
+  set(ENV{LOCAL_INSTALL_DIR} ${CMAKE_CURRENT_BINARY_DIR}/../dist)
 
   execute_process(
   COMMAND ${LOCAL_REPO_DIR}/ci/build.sh ${CMAKE_BUILD_TYPE}
@@ -49,4 +49,5 @@ function(configureLibrary LIBRARY_NAME LIBRARY_REPOSITORY LIBRARY_TAG)
   )
 
   message("Done building")
+  find_package(${LIBRARY_NAME} QUIET)
 endfunction()
