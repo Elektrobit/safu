@@ -121,7 +121,6 @@ pipeline {
       steps{
         gitlabCommitStatus("safu: lint sources") {
           sh '''#!/bin/bash -xe
-            export IGNORE_SOURCES="src/safu/include/safu/mutex.h"
             ./ci/code_lint.py --ci
             ./ci/checklicense.sh
           '''
