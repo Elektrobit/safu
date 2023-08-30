@@ -1,0 +1,22 @@
+# Temporary folders for building and/or testing
+__pycache__
+_build
+_demo
+b
+bld
+build
+build-*
+r
+release
+ci/sshconfig
+*.swp
+compile_commands.json
+# eclipse project files and folders
+.profile
+.cprofile
+.settings
+.asciidoctorconfig.adoc
+**/build
+**/build-*
+dist-*
+**/generated
