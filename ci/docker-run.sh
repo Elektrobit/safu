@@ -35,6 +35,7 @@ fi
 docker run --rm -it $SSH_AGENT_OPTS \
     -v "$BASE_DIR":/base/safu \
     -w /base/safu \
+    -e GIT_USER_TOKEN="${GIT_USER_TOKEN}" \
     --privileged \
     --device=/dev/kmsg \
     "$IMAGE_NAME" "$@"
