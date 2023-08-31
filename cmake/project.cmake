@@ -87,6 +87,9 @@ endfunction()
 
 
 function(project_add_documentation_target)
+  if (TARGET ${PROJECT_NAME}_doc)
+    return()
+  endif ()
   cmake_parse_arguments(PARAM "" "MARKDOWN;TITLE" "" ${ARGN})
 
   find_program(PLANTUML NAMES plantuml)
