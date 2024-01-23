@@ -3,6 +3,8 @@
 
 #include <safu/vector_types.h>
 
+__BEGIN_DECLS
+
 /*******************************************************************
  * Initialize a new vector with a given count and element size.
  *
@@ -204,3 +206,5 @@ int safuVecFindRemove(safuVec_t *vec, safuVecFunc_t matchFunc, const void *match
  *      - `-1` in error case and leaves the vec unchanged
  ******************************************************************/
 #define safuVecIterate(__v, __f, __d) safuVecFind(__v, 0, __f, __d, NULL)
+
+__END_DECLS

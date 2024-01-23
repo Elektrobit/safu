@@ -7,6 +7,8 @@
 #include <string.h>
 #include <sys/socket.h>
 
+__BEGIN_DECLS
+
 /*******************************************************************
  * Checks if the given string argument is empty. The given string
  * is treated as empty if it is NULL or if it consists only of white spaces.
@@ -169,3 +171,5 @@ const char *safuGetEnvOr(const char *key, const char *defaultValue);
  *      - `-1` on invalid parameters and set `errno` to `EINVAL`
  ******************************************************************/
 ssize_t safuWriteExactly(int fd, const void *buf, size_t len);
+
+__END_DECLS

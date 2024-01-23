@@ -6,6 +6,8 @@
 #include <stdint.h>
 #include <time.h>
 
+__BEGIN_DECLS
+
 /*******************************************************************
  * Add an empty json array value to the given json object. This function is mostly
  * a wrapper for json-c's json_object_new_array
@@ -256,3 +258,5 @@ struct json_object *safuJsonAddNewTimestamp(struct json_object *jobj, const char
  *      - `-1` in error case
  ******************************************************************/
 int safuJsonGetTimestamp(const struct json_object *jobj, const char *name, size_t idx, struct timespec *timestamp);
+
+__END_DECLS

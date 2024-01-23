@@ -40,6 +40,8 @@ typedef struct safuLogMessage {
 
 typedef safuLogStatusE_t (*safuLogFuncCb_t)(safuLogMessage_t logMessage);
 
+__BEGIN_DECLS
+
 safuLogLevelE_t safuLogLevelFromString(const char *logLevelStr);
 const char *safuLogLevelToString(safuLogLevelE_t logLevel);
 
@@ -56,6 +58,8 @@ safuLogStatusE_t safuLogFuncF(safuLogLevelE_t level, const char *file, const cha
                               const char *fmt, ...) __attribute__((__format__(__printf__, 5, 6)));
 safuLogStatusE_t safuLogFunc(safuLogLevelE_t level, const char *file, const char *func, unsigned int line,
                              const char *fmt) __attribute__((__format__(__printf__, 5, 0)));
+
+__BEGIN_DECLS
 
 #define safuLogCrit(__message) safuLogFunc(SAFU_LOG_LEVEL_CRIT, __FILE__, __func__, __LINE__, __message)
 #define safuLogCritF(__message, ...) \

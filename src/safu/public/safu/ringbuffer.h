@@ -6,6 +6,8 @@
 #include <safu/ringbuffer_types.h>
 #include <safu/vector.h>
 
+__BEGIN_DECLS
+
 /**
  * Create a new Ringbuffer.
  *
@@ -30,3 +32,5 @@ safuResultE_t safuRingBufferDelete(safuRingBuffer_t **ringBuffer);
 
 safuResultE_t safuRingBufferWrite(safuRingBuffer_t *ringBuffer, void *element);
 safuResultE_t safuRingBufferRead(safuRingBuffer_t *ringBuffer, safuVec_t *elementVector, size_t *elementsWritten);
+
+__END_DECLS
