@@ -23,7 +23,7 @@ typedef struct safuRingBufferParam {
 } safuRingBufferParam_t;
 
 typedef struct safuRingBufferCallback {
-    safuRingBufferEntryDeleteFunc_t *delete;
+    safuRingBufferEntryDeleteFunc_t *deleteFunc;
 } safuRingBufferCallback_t;
 
 __END_DECLS
