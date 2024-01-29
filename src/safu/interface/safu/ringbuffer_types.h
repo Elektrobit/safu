@@ -4,7 +4,6 @@
 #include <pthread.h>
 #include <safu/flags.h>
 #include <safu/result.h>
-#include <stdatomic.h>
 #include <stdbool.h>
 #include <stddef.h>
 
@@ -12,6 +11,8 @@
 
 #define SAFU_RINGBUFFER_DELETE_ENTRIES_BIT       (SAFU_FLAG_CUSTOM_START_BIT << 0)
 #define SAFU_FLAG_HAS_DELETE_ENTRIES_BIT(__flag) ((atomic_load(__flag) & SAFU_RINGBUFFER_DELETE_ENTRIES_BIT) != 0)
+
+__BEGIN_DECLS
 
 typedef safuResultE_t(safuRingBufferEntryDeleteFunc_t)(void *);
 
@@ -22,8 +23,10 @@ typedef struct safuRingBufferParam {
 } safuRingBufferParam_t;
 
 typedef struct safuRingBufferCallback {
-    safuRingBufferEntryDeleteFunc_t *delete;
+    safuRingBufferEntryDeleteFunc_t *deleteFunc;
 } safuRingBufferCallback_t;
+
+__END_DECLS
 
 /**
  * Represents a ring buffer.

@@ -34,7 +34,7 @@ void safuTestSafuRingBufferInitializeSuccess(void **state) {
     PARAM("%s", "Initialize without deleteFunc");
     result = safuRingBufferInitialize(&test->ringBuffer, &paramA);
     assert_int_equal(result, SAFU_RESULT_OK);
-    assert_ptr_equal(test->ringBuffer.callback.delete, NULL);
+    assert_ptr_equal(test->ringBuffer.callback.deleteFunc, NULL);
     assert_non_null(test->ringBuffer.data);
     assert_int_equal(test->ringBuffer.elements, _TEST_ELEMENTS);
     assert_int_equal(test->ringBuffer.elementsWritten, 0);
@@ -48,7 +48,7 @@ void safuTestSafuRingBufferInitializeSuccess(void **state) {
     PARAM("%s", "Initialize with deleteFunc");
     result = safuRingBufferInitialize(&test->ringBuffer, &paramB);
     assert_int_equal(result, SAFU_RESULT_OK);
-    assert_ptr_equal(test->ringBuffer.callback.delete, _dummyDeleteFunc);
+    assert_ptr_equal(test->ringBuffer.callback.deleteFunc, _dummyDeleteFunc);
     assert_non_null(test->ringBuffer.data);
     assert_int_equal(test->ringBuffer.elements, _TEST_ELEMENTS);
     assert_int_equal(test->ringBuffer.elementsWritten, 0);

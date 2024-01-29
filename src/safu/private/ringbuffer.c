@@ -17,8 +17,8 @@ safuResultE_t _replaceEntry(safuRingBuffer_t *ringBuffer, size_t idx, void *elem
     } else {
         if (SAFU_FLAG_HAS_DELETE_ENTRIES_BIT(&ringBuffer->flags) == true) {
             if (ringBuffer->data[idx] != NULL) {
-                if (ringBuffer->callback.delete != NULL) {
-                    result = ringBuffer->callback.delete(ringBuffer->data[idx]);
+                if (ringBuffer->callback.deleteFunc != NULL) {
+                    result = ringBuffer->callback.deleteFunc(ringBuffer->data[idx]);
                 } else {
                     free(ringBuffer->data[idx]);
                 }
@@ -51,7 +51,7 @@ safuResultE_t safuRingBufferInitialize(safuRingBuffer_t *ringBuffer, safuRingBuf
                 safuLogErr("Memory allocation failed");
                 result = SAFU_RESULT_FAILED;
             } else {
-                ringBuffer->callback.delete = param->deleteFunc;
+                ringBuffer->callback.deleteFunc = param->deleteFunc;
                 ringBuffer->elements = elements;
                 ringBuffer->memorySize = memorySize;
                 ringBuffer->data = newData;
@@ -125,7 +125,7 @@ safuResultE_t safuRingBufferDeleteMembers(safuRingBuffer_t *ringBuffer) {
                     ringBuffer->data = NULL;
                 }
 
-                ringBuffer->callback.delete = NULL;
+                ringBuffer->callback.deleteFunc = NULL;
                 ringBuffer->elements = 0;
                 ringBuffer->nextIdx = 0;
                 ringBuffer->memorySize = 0;

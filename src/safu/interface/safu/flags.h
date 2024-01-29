@@ -1,7 +1,13 @@
 // SPDX-License-Identifier: MIT
 #pragma once
 
+#ifdef __cplusplus
+#include <atomic>
+using std::atomic_uint;
+#else
 #include <stdatomic.h>
+#endif
+
 #include <stdbool.h>
 #include <stdint.h>
 
@@ -10,7 +16,7 @@
  * The upper 16 bits (SAFU_FLAG_CUSTOM_MASK) will be kept free
  * and can be used for component specific custom values
  */
-typedef atomic_uint_least32_t safuFlags_t;
+typedef atomic_uint safuFlags_t;
 
 #define SAFU_FLAG_NONE             (0)
 #define SAFU_FLAG_MASK             (0x0000FFFFU)

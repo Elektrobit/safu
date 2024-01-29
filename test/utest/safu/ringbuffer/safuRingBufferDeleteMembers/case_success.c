@@ -50,7 +50,7 @@ void safuTestSafuRingBufferDeleteMembersSuccess(void **state) {
     assert_int_equal(result, SAFU_RESULT_OK);
     result = safuRingBufferDeleteMembers(&test->ringBuffer);
     assert_int_equal(result, SAFU_RESULT_OK);
-    assert_ptr_equal(test->ringBuffer.callback.delete, NULL);
+    assert_ptr_equal(test->ringBuffer.callback.deleteFunc, NULL);
     assert_ptr_equal(test->ringBuffer.data, NULL);
     assert_int_equal(test->ringBuffer.elements, 0);
     assert_int_equal(test->ringBuffer.elementsWritten, 0);
