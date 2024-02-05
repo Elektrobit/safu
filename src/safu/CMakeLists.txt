@@ -91,3 +91,9 @@ install(
 
 install(TARGETS safu EXPORT safuTargets DESTINATION ${CMAKE_INSTALL_LIBDIR})
 install(TARGETS safu_interface EXPORT safuTargets DESTINATION ${CMAKE_INSTALL_LIBDIR})
+
+include(${PROJECT_SOURCE_DIR}/cmake/pkgconfig/pkgconfig.cmake)
+create_pkgconfig(
+  REQUIRES "json-c >= 0.15"
+  LIBS "-lsafu"
+)
