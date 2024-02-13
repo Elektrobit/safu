@@ -11,3 +11,4 @@ void safuTestSafuVecInsertFrontWithoutResize(void **state);
 void safuTestSafuVecInsertErrInvalidIndex(void **state);
 void safuTestSafuVecInsertExterrRemalloc(void **state);
 void safuTestSafuVecInsertErrNullVector(void **state);
+void safuTestSafuVecInsertErrNullElement(void **state);

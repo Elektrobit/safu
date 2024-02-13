@@ -13,6 +13,7 @@ create_unit_test(
     case_without_resize.c
     case_err_invalid_index.c
     case_exterr_realloc.c
+    case_err_null_element.c
     case_err_null_vector.c
     safuVecInsert_utest.c
   LIBRARIES

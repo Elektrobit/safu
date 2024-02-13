@@ -60,7 +60,7 @@ int safuVecInsert(safuVec_t *vec, uint32_t idx, const void *element) {
     uint32_t newidx;
     uint32_t oldidx;
 
-    if ((safuVecCheck(vec) < 0) || (idx > vec->elementCount)) {
+    if ((element == NULL) || (safuVecCheck(vec) < 0) || (idx > vec->elementCount)) {
         return -1;
     }
 
