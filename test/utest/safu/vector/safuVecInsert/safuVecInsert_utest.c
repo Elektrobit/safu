@@ -12,6 +12,7 @@ int main() {
         cmocka_unit_test(safuTestSafuVecInsertErrInvalidIndex),
         cmocka_unit_test(safuTestSafuVecInsertExterrRemalloc),
         cmocka_unit_test(safuTestSafuVecInsertErrNullVector),
+        cmocka_unit_test(safuTestSafuVecInsertErrNullElement),
     };
 
     return cmocka_run_group_tests(tests, NULL, NULL);
