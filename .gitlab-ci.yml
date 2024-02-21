@@ -1,0 +1,106 @@
+variables:
+  SOURCES_URI: "https://${GIT_USER_TOKEN}@gitlabintern.emlix.com/elektrobit/base-os"
+
+stages:
+  - build
+  - test
+
+default:
+  image: docker:24-dind
+  services:
+    - name: docker:24-dind
+      alias: docker
+  tags:
+      - "shell"
+
+before_script:
+  - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
+  - docker info
+  - ip a
+  - ss -antup
+  - env
+
+build-release:
+  stage: build
+  script:
+    - ci/docker-run.sh ci/build.sh --ci Release
+  artifacts:
+    paths:
+      - build/Release/dist/
+      - build/Release/cmake/
+    exclude:
+      - build/deps/src/
+
+build-debug:
+  stage: build
+  script:
+    - ci/docker-run.sh ci/build.sh --ci Debug
+  artifacts:
+    paths:
+      - build/Debug/dist/
+      - build/Debug/cmake/
+
+unit-test-release:
+  stage: test
+  needs: [build-release]
+  script:
+    - ci/docker-run.sh ci/run_utest.sh Release
+  artifacts:
+    when: always
+    paths:
+      - build/Release/result/unit_test/
+    reports:
+      junit: build/Release/result/unit_test/junit.xml
+
+unit-test-debug:
+  stage: test
+  needs: [build-debug]
+  script:
+    - ci/docker-run.sh ci/run_utest.sh Debug
+  artifacts:
+    when: always
+    paths:
+      - build/Debug/result/unit_test/
+    reports:
+      junit: build/Debug/result/unit_test/junit.xml
+
+code-lint:
+  stage: test
+  needs: [build-release]
+  script:
+    - ci/docker-run.sh ci/code_lint.py --ci
+    - ci/docker-run.sh ci/checklicense.sh
+  artifacts:
+    when: always
+    paths:
+      - build/Release/cmake/lint_results/
+
+code-coverage:
+  rules:
+    - when: manual
+      allow_failure: true
+  stage: test
+  script:
+    - ci/docker-run.sh ci/create_coverage.sh
+  artifacts:
+    when: always
+    paths:
+      - build/Release/cmake/coverage_results/
+
+publish-kpis:
+  rules:
+    - when: manual
+      allow_failure: true
+  script:
+    - ci/publish_pkis.sh
+
+documentation:
+  stage: test
+  rules:
+    - when: manual
+      allow_failure: true
+  script:
+    - ci/docker-run.sh ci/build_doc.sh
+  artifacts:
+    paths:
+      - build/Debug/doc/
