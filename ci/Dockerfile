@@ -78,12 +78,13 @@ ENV DOCKERBUILD=1
 RUN python -m venv /home/$USER/.venv \
   && . /home/$USER/.venv/bin/activate \
   && python -m pip install \
-     beautifulsoup4  \
-     sphinx \
-     sphinx-c-autodoc \
-     sphinx-copybutton \
-     sphinx-favicon \
-     sphinxcontrib-programoutput
+     beautifulsoup4==4.12.2  \
+     clang==16.0.1.1 \
+     sphinx==7.2.6 \
+     sphinx-c-autodoc==1.3.0 \
+     sphinx-copybutton==0.5.2 \
+     sphinx-favicon==1.0.1 \
+     sphinxcontrib-programoutput==0.17
 
 # install sphinx-c-autodoc dependedncies
 RUN wget -qO- https://apt.llvm.org/llvm-snapshot.gpg.key | sudo tee /etc/apt/trusted.gpg.d/apt.llvm.org.asc \
