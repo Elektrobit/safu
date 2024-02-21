@@ -80,17 +80,19 @@ code-coverage:
     - when: manual
       allow_failure: true
   stage: test
+  needs: [build-release]
   script:
     - ci/docker-run.sh ci/create_coverage.sh
   artifacts:
     when: always
     paths:
-      - build/Release/cmake/coverage_results/
+      - build/Release/result/coverage_results/
 
 publish-kpis:
   rules:
     - when: manual
       allow_failure: true
+  needs: [code-coverage]
   script:
     - ci/publish_pkis.sh
 
