@@ -97,12 +97,9 @@ publish-kpis:
     - ci/publish_pkis.sh
 
 documentation:
-  stage: test
-  rules:
-    - when: manual
-      allow_failure: true
+  stage: build
   script:
     - ci/docker-run.sh ci/build_doc.sh
   artifacts:
     paths:
-      - build/Debug/doc/
+      - build/doc/

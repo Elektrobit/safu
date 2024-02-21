@@ -141,7 +141,7 @@ pipeline {
       }
       post {
         success {
-          archiveArtifacts artifacts: "doc/build/**", fingerprint: true
+          archiveArtifacts artifacts: "build/doc/**", fingerprint: true
         }
       }
     }
