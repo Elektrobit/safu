@@ -7,6 +7,12 @@ BASE_DIR=${CMD_PATH%/*}
 PROJECT=${BASE_DIR##*/}
 IMAGE_NAME="${PROJECT}-build"
 
+IT="-it"                                                                                                                                                 
+if [ "${CI}" = true ]; then                                                                                                                              
+    echo "Running in CI"                                                                                                                                 
+    IT=""                                                                                                                                                
+fi
+
 if [ -f "${HOME}/.ssh/asmcov_token" ]; then
     echo "Loading asmcov token from ${HOME}/.ssh/asmcov_token."
     . "${HOME}/.ssh/asmcov_token"
@@ -14,6 +20,7 @@ fi
 
 echo "==> create docker image"
 cd "$BASE_DIR/ci"
+DOCKER_BUILDKIT=0 \
 docker build \
     --build-arg UID="$(id -u)" --build-arg GID="$(id -g)" \
     --build-arg ASMCOV_URI="${ASMCOV_URI-not available}" \
@@ -32,10 +39,11 @@ if [ "$SSH_AUTH_SOCK" ]; then
     SSH_AGENT_OPTS="-v $SSH_AGENT_SOCK:/run/ssh-agent -e SSH_AUTH_SOCK=/run/ssh-agent"
 fi
 
-docker run --rm -it $SSH_AGENT_OPTS \
-    -v "$BASE_DIR":/base/safu \
-    -w /base/safu \
-    -e GIT_USER_TOKEN="${GIT_USER_TOKEN}" \
+docker run --rm ${IT} $SSH_AGENT_OPTS \
+    -v "$BASE_DIR":/base \
+    -w /base \
+    ${GIT_USER_TOKEN:+-e GIT_USER_TOKEN="${GIT_USER_TOKEN}"} \
+    ${SOURCES_URI:+-e SOURCES_URI="${SOURCES_URI}"} \
     --privileged \
     --device=/dev/kmsg \
     "$IMAGE_NAME" "$@"
