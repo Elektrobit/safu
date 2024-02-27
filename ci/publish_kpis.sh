@@ -1,7 +1,11 @@
 #!/bin/bash -exu
-CMD_PATH=$(cd "$(dirname "$0")" && pwd)
-BASE_DIR=${CMD_PATH%/*}
-BASE_DIR=$(dirname "$0")/..
+
+CMD_PATH="$(realpath "$(dirname "$0")")"
+BASE_DIR="$(realpath "$CMD_PATH/..")"
+
+BUILD_TYPE="${1:-Release}"
+
+. "$BASE_DIR/ci/common_names.sh"
 
 BRANCH_NAME=${BRANCH_NAME-$(git branch --show-current)}
 
@@ -26,13 +30,13 @@ function push_all_kpis {
 }
 
 function collect_coverage_kpis {
-    local COVERAGE_RESULT_DIR=$BASE_DIR/build/Release/result/coverage_results/
+    local COVERAGE_RESULT_DIR=$RESULT_DIR/coverage_results/
 
     if [ ! -d "$COVERAGE_RESULT_DIR" ]; then
         echo "Skip publishing coverage, no coverage results found"
     fi
 
-    find "$BASE_DIR/build/Release/cmake/src/" -type f -name "*.a" -and -not -name "*_weak.a" -exec objdump -t {} \; > /tmp/symbols.log
+    find "$CMAKE_BUILD_DIR/src/" -type f -name "*.a" -and -not -name "*_weak.a" -exec objdump -t {} \; > /tmp/symbols.log
 
     PUBLIC_FUNCTIONS=$(grep "g[ ]*F .text" /tmp/symbols.log | grep -oE "[^ ]+$" || true)
     PUBLIC_FUNCTION_COUNT=$(echo "$PUBLIC_FUNCTIONS" | wc -w)
@@ -47,15 +51,15 @@ function collect_coverage_kpis {
     local COVERAGE=0
     for TEST_NAME in $TESTED_PUBLIC_FUNCTIONS; do
         echo "--> $TEST_NAME"
-        local RESULT_DIR=$COVERAGE_RESULT_DIR/$TEST_NAME
-        if [ -f "$RESULT_DIR/asmcov.log" ]; then
+        local TEST_RESULT_DIR=$COVERAGE_RESULT_DIR/$TEST_NAME
+        if [ -f "$TEST_RESULT_DIR/asmcov.log" ]; then
           local VALUE
-          VALUE=$(grep "Branch coverage:" "$RESULT_DIR/asmcov.log"|tr -dc 0-9)
+          VALUE=$(grep "Branch coverage:" "$TEST_RESULT_DIR/asmcov.log"|tr -dc 0-9)
           if [ "x$VALUE" != "x" ]; then
               COVERAGE=$((COVERAGE+VALUE))
           fi
         else
-          echo "Skip $RESULT_DIR, look not like a test result dir"
+          echo "Skip $TEST_RESULT_DIR, look not like a test result dir"
         fi
     done
 
@@ -73,7 +77,7 @@ function collect_coverage_kpis {
 
     echo "tested coverage: $TESTED_COVERAGE"
     echo "total coverage: $TOTAL_COVERAGE"
-    add_kpi "elos_tools.safu.coverage" "build/Release/result" "public_functions=$PUBLIC_FUNCTION_COUNT,tested_public_functions=$TESTED_PUBLIC_FUNCTION_COUNT,local_functions=$LOCAL_FUNCTION_COUNT,average_coverage=$TOTAL_COVERAGE,average_tested_coverage=$TESTED_COVERAGE"
+    add_kpi "elos_tools.safu.coverage" "$RESULT_DIR" "public_functions=$PUBLIC_FUNCTION_COUNT,tested_public_functions=$TESTED_PUBLIC_FUNCTION_COUNT,local_functions=$LOCAL_FUNCTION_COUNT,average_coverage=$TOTAL_COVERAGE,average_tested_coverage=$TESTED_COVERAGE"
 
     rm /tmp/symbols.log
 }
