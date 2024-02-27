@@ -8,8 +8,6 @@ BUILD_TYPE="${1:-Debug}"
 
 . "$BASE_DIR/ci/common_names.sh"
 
-CMAKE_BUILD_DIR="$BUILD_DIR/cmake"
-
 if [ ! -d "$CMAKE_BUILD_DIR" ]; then
     "$CMD_PATH/build.sh" "$BUILD_TYPE"
 fi
