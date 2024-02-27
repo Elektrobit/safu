@@ -63,33 +63,29 @@ CMAKE_PARAM="${CMAKE_PARAM} -D CMOCKA_EXTENSIONS_URI=${CMOCKA_EXTENSIONS_REPO_PA
 CMAKE_PARAM="${CMAKE_PARAM} -D CMOCKA_MOCKS_URI=${CMOCKA_MOCKS_REPO_PATH} \
                             -D CMOCKA_MOCKS_REF=${CMOCKA_MOCKS_REPO_REF}"
 
-BUILD_DIR="$BASE_DIR/build/$BUILD_TYPE"
-RESULT_DIR="$BUILD_DIR/result"
-DIST_DIR="$BUILD_DIR/dist"
+. "$BASE_DIR/ci/common_names.sh"
+
 CMAKE_BUILD_DIR="$BUILD_DIR/cmake"
 export LOCAL_INSTALL_DIR=${LOCAL_INSTALL_DIR:-"$DIST_DIR"}
 CMAKE_PARAM="${CMAKE_PARAM} -D INSTALL_DIR=${LOCAL_INSTALL_DIR}"
 
-DEP_BUILD_PARAM=""
 if [ $OPTION_CLEAN -eq 1 ]; then
-    DEP_BUILD_PARAM="$DEP_BUILD_PARAM -c"
     if [ -e "$BUILD_DIR" ]; then
         echo "Removing $BUILD_DIR ..."
         rm -rf "$BUILD_DIR"
     fi
 fi
 if [ $OPTION_VERBOSE -eq 1 ]; then
-    DEP_BUILD_PARAM="$DEP_BUILD_PARAM -v"
     NINJA_PARAM="$NINJA_PARAM -v"
 fi
 
-echo -e "\n#### Configuring safu ($BUILD_TYPE) ####"
+echo -e "\n#### Configuring $PROJECT ($BUILD_TYPE) ####"
 mkdir -p "$RESULT_DIR" "$DIST_DIR"
 if [ ! -e "$CMAKE_BUILD_DIR/build.ninja" ]; then
     cmake -B "$CMAKE_BUILD_DIR" "$BASE_DIR" "-DCMAKE_BUILD_TYPE=$BUILD_TYPE" -G Ninja $CMAKE_PARAM
 fi
 
-echo -e "\n#### Building safu ($BUILD_TYPE) ####"
+echo -e "\n#### Building $PROJECT ($BUILD_TYPE) ####"
 DESTDIR="$LOCAL_INSTALL_DIR" \
 ninja -C "$CMAKE_BUILD_DIR" $NINJA_PARAM all install 2>&1 | tee "$RESULT_DIR/build_log.txt"
 
