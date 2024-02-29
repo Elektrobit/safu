@@ -18,21 +18,29 @@ before_script:
   - ss -antup
   - env
 
-build-release:
+build-dependencies:
   stage: build
   needs: []
+  script:
+    - ci/docker-run.sh ci/install_deps.py -c ci/dependencies_emlix.json
+  cache:
+    paths:
+      - build/deps/lib/
+      - build/deps/include/
+
+build-release:
+  stage: build
+  needs: [build-dependencies]
   script:
     - ci/docker-run.sh ci/build.sh --ci Release
   artifacts:
     paths:
       - build/Release/dist/
       - build/Release/cmake/
-    exclude:
-      - build/deps/src/
 
 build-debug:
   stage: build
-  needs: []
+  needs: [build-dependencies]
   script:
     - ci/docker-run.sh ci/build.sh --ci Debug
   artifacts:
