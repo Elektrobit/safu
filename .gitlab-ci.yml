@@ -16,7 +16,7 @@ before_script:
   - docker info
   - ip a
   - ss -antup
-  - env
+  - env | sort
 
 build-dependencies:
   stage: build
