@@ -23,7 +23,7 @@ build-dependencies:
   needs: []
   script:
     - ci/docker-run.sh ci/install_deps.py -c ci/dependencies_emlix.json
-  cache:
+  artifacts:
     paths:
       - build/deps/lib/
       - build/deps/include/
@@ -50,7 +50,9 @@ build-debug:
 
 unit-test-release:
   stage: test
-  needs: [build-release]
+  needs:
+    - build-release
+    - build-dependencies
   script:
     - ci/docker-run.sh ci/run_utest.sh Release
   artifacts:
@@ -62,7 +64,9 @@ unit-test-release:
 
 unit-test-debug:
   stage: test
-  needs: [build-debug]
+  needs:
+    - build-debug
+    - build-dependencies
   script:
     - ci/docker-run.sh ci/run_utest.sh Debug
   artifacts:
@@ -74,7 +78,9 @@ unit-test-debug:
 
 code-lint:
   stage: test
-  needs: [build-release]
+  needs:
+    - build-release
+    - build-dependencies
   script:
     - ci/docker-run.sh ci/code_lint.py --ci
     - ci/docker-run.sh ci/checklicense.sh
@@ -88,7 +94,9 @@ code-coverage:
     - when: manual
       allow_failure: true
   stage: test
-  needs: [build-release]
+  needs:
+    - build-release
+    - build-dependencies
   script:
     - ci/docker-run.sh ci/create_coverage.sh
   artifacts:
