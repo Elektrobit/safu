@@ -3,7 +3,7 @@ set -eu
 
 CMD_PATH=$(realpath "$(dirname "$0")")
 BASE_DIR=$(realpath "$CMD_PATH/../..")
-BUILD_TYPE=Release
+BUILD_TYPE="${BUILD_TYPE:-Release}"
 . "$BASE_DIR/ci/common_names.sh"
 
 TEXT_RED="\033[31m"
