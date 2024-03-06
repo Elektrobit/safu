@@ -12,9 +12,13 @@ if [ ! -d "$CMAKE_BUILD_DIR" ]; then
     "$CMD_PATH/build.sh" "$BUILD_TYPE"
 fi
 
-cd "$CMAKE_BUILD_DIR"
-ctest --output-on-failure --force-new-ctest-process --verbose --output-junit junit.xml --no-compress-output
-
+mkdir -p "$RESULT_DIR/unit_test"
+cd "$RESULT_DIR/unit_test"
+ctest --output-on-failure --force-new-ctest-process --verbose \
+    --output-junit "$RESULT_DIR/unit_test/junit.xml" \
+    --no-compress-output \
+    --output-log "$RESULT_DIR/unit_test/Test.log" \
+    --test-dir "$BUILD_DIR/cmake"
 
 TEST_LOG_FILE="$CMAKE_BUILD_DIR/Testing/Temporary/LastTest.log"
 SKIPPED_TESTS=$(sed -n -e '/^# skip/p' "$TEST_LOG_FILE" | wc -l)
