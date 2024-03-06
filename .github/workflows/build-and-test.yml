@@ -42,14 +42,14 @@ jobs:
           cmake -B ./build/${{ matrix.build_type }}/cmake . -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
           make -C ./build/${{ matrix.build_type }}/cmake all install
       - name: save build artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.build_type }}-build
           path: build/${{ matrix.build_type}}/dist
       - name: run unit tests (${{ matrix.build_type }})
         run: ci/run_utest.sh ${{ matrix.build_type }}
       - name: save ${{ matrix.build_type }} unit test report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: ${{ matrix.build_type }}-test-report
