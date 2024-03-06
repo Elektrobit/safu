@@ -18,12 +18,12 @@ project_add_documentation_target(
   MARKDOWN
     ${CMAKE_SOURCE_DIR}/documentation/documentation.md
 )
+if (UNIT_TESTS)
+  enable_testing()
+endif (UNIT_TESTS)
 
 add_subdirectory(src)
-if(UNIT_TESTS)
-  enable_testing()
-  add_subdirectory(test/utest)
-endif(UNIT_TESTS)
+add_subdirectory(test/utest)
 
 if(PACKAGING)
   include(cmake/Packing.cmake)
