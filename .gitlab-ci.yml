@@ -16,23 +16,31 @@ before_script:
   - docker info
   - ip a
   - ss -antup
-  - env
+  - env | sort
+
+build-dependencies:
+  stage: build
+  needs: []
+  script:
+    - ci/docker-run.sh ci/install_deps.py -c ci/dependencies_emlix.json
+  artifacts:
+    paths:
+      - build/deps/lib/
+      - build/deps/include/
 
 build-release:
   stage: build
-  needs: []
+  needs: [build-dependencies]
   script:
     - ci/docker-run.sh ci/build.sh --ci Release
   artifacts:
     paths:
       - build/Release/dist/
       - build/Release/cmake/
-    exclude:
-      - build/deps/src/
 
 build-debug:
   stage: build
-  needs: []
+  needs: [build-dependencies]
   script:
     - ci/docker-run.sh ci/build.sh --ci Debug
   artifacts:
@@ -42,7 +50,9 @@ build-debug:
 
 unit-test-release:
   stage: test
-  needs: [build-release]
+  needs:
+    - build-release
+    - build-dependencies
   script:
     - ci/docker-run.sh ci/run_utest.sh Release
   artifacts:
@@ -54,7 +64,9 @@ unit-test-release:
 
 unit-test-debug:
   stage: test
-  needs: [build-debug]
+  needs:
+    - build-debug
+    - build-dependencies
   script:
     - ci/docker-run.sh ci/run_utest.sh Debug
   artifacts:
@@ -66,7 +78,9 @@ unit-test-debug:
 
 code-lint:
   stage: test
-  needs: [build-release]
+  needs:
+    - build-release
+    - build-dependencies
   script:
     - ci/docker-run.sh ci/code_lint.py --ci
     - ci/docker-run.sh ci/checklicense.sh
@@ -77,10 +91,12 @@ code-lint:
 
 code-coverage:
   rules:
-    - when: manual
+    - when: never
       allow_failure: true
   stage: test
-  needs: [build-release]
+  needs:
+    - build-release
+    - build-dependencies
   script:
     - ci/docker-run.sh ci/create_coverage.sh
   artifacts:
@@ -90,7 +106,7 @@ code-coverage:
 
 publish-kpis:
   rules:
-    - when: manual
+    - when: never
       allow_failure: true
   needs: [code-coverage]
   script:
