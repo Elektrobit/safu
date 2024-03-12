@@ -91,7 +91,7 @@ code-lint:
 
 code-coverage:
   rules:
-    - when: manual
+    - when: never
       allow_failure: true
   stage: test
   needs:
@@ -106,7 +106,7 @@ code-coverage:
 
 publish-kpis:
   rules:
-    - when: manual
+    - when: never
       allow_failure: true
   needs: [code-coverage]
   script:
