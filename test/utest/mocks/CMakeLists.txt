@@ -155,13 +155,15 @@ write_basic_package_version_file(
     COMPATIBILITY SameMajorVersion
 )
 
-install(
-  FILES
-    "${CMAKE_CURRENT_BINARY_DIR}/safu/mock_safuConfig.cmake"
-    "${CMAKE_CURRENT_BINARY_DIR}/safu/mock_safuConfigVersion.cmake"
-  DESTINATION
-    "${CMAKE_INSTALL_LIBDIR}/cmake/safu"
-)
+if (SAFU_MOCK_LIBRARY AND INSTALL_SAFU_MOCK_LIBRARY)
+  install(
+    FILES
+      "${CMAKE_CURRENT_BINARY_DIR}/safu/mock_safuConfig.cmake"
+      "${CMAKE_CURRENT_BINARY_DIR}/safu/mock_safuConfigVersion.cmake"
+    DESTINATION
+      "${CMAKE_INSTALL_LIBDIR}/cmake/safu"
+  )
 
-install(TARGETS mock_safu EXPORT safuTargets  DESTINATION ${CMAKE_INSTALL_LIBDIR})
-install(DIRECTORY safu/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/safu FILES_MATCHING PATTERN "*.h")
+  install(TARGETS mock_safu EXPORT safuTargets  DESTINATION ${CMAKE_INSTALL_LIBDIR})
+  install(DIRECTORY safu/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/safu FILES_MATCHING PATTERN "*.h")
+endif (SAFU_MOCK_LIBRARY AND INSTALL_SAFU_MOCK_LIBRARY)
