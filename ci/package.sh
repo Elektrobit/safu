@@ -1,12 +1,10 @@
 #!/bin/bash
 set -e -u -o pipefail
 
-CMD_PATH=$(realpath "$(dirname "$0")")
-BASE_DIR=${CMD_PATH%/*}
-
+CMD_PATH="$(realpath "$(dirname "$0")")"
+BASE_DIR="$(realpath "$CMD_PATH/..")"
 BUILD_TYPE="${1:-Release}"
-BUILD_DIR="$BASE_DIR/build/$BUILD_TYPE"
-CMAKE_BUILD_DIR="$BUILD_DIR/cmake"
+. "$BASE_DIR/ci/common_names.sh"
 
 cd "$CMAKE_BUILD_DIR"
 cpack -G DEB

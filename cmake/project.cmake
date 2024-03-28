@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: MIT
-set(SAFU_VERSION 0.51.1)
+set(SAFU_VERSION 0.52.4)
 
 # Attention: Aside from the version, as many things as possible in this file
 #   should be put into functions, as this solves potential issues with commands
@@ -16,11 +16,17 @@ macro(project_set_environment)
   set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
   include(GNUInstallDirs)
 
-  option(UNIT_TESTS "Build unit tests" ON)
+  option(SAFU_BUILD_DEFAULTS "enable all default builds" ON)
+
   option(ENABLE_ANALYZER "Build with -fanalyzer" ON)
   option(ENABLE_CI "Use CI mode for building" OFF)
-  option(INSTALL_UNIT_TESTS "Install unit tests" ON)
   option(ENABLE_ASAN "Link with ASAN" ON)
+
+  option(UNIT_TESTS "Build unit tests" ${SAFU_BUILD_DEFAULTS})
+  option(INSTALL_UNIT_TESTS "Install unit tests" ${UNIT_TESTS})
+
+  option(SAFU_MOCK_LIBRARY "Build the mock libraries" ${SAFU_BUILD_DEFAULTS})
+  option(INSTALL_SAFU_MOCK_LIBRARY "Install the mock libraries" ${SAFU_MOCK_LIBRARY})
 
   add_compile_options(
     -Wshadow -Wall -Wextra -pedantic -D_DEFAULT_SOURCE

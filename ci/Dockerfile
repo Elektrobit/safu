@@ -4,6 +4,7 @@ ARG USER=ci
 ARG UID=1000
 ARG GID=1000
 ARG ASMCOV_URI="not available"
+ARG CAPSTONE_VERSION=4.0.2
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update \
@@ -55,7 +56,7 @@ RUN locale-gen en_US.UTF-8 \
  && useradd -m -u $UID -g $GID -o -s /bin/bash $USER \
  && echo "$USER ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
-RUN git clone --depth 1 https://github.com/aquynh/capstone.git
+RUN git clone --depth 1 --branch $CAPSTONE_VERSION https://github.com/aquynh/capstone.git
 RUN cd capstone/ \
  && ./make.sh \
  &&  sudo ./make.sh install
@@ -66,11 +67,6 @@ RUN if [ "${ASMCOV_URI}" != "not available" ]; then git clone --depth 1 ${ASMCOV
  && make -C build install; \
  fi
 
-RUN git clone https://gitlab.com/esr/tapview.git
-RUN cd tapview \
- && sed -i '/$(INSTALL) -m 644 $(MANPAGES)/d' Makefile\
- && make install DESTDIR=/ prefix=usr
-
 USER $USER
 ENV LC_ALL=en_US.UTF-8
 ENV DOCKERBUILD=1
@@ -78,12 +74,13 @@ ENV DOCKERBUILD=1
 RUN python -m venv /home/$USER/.venv \
   && . /home/$USER/.venv/bin/activate \
   && python -m pip install \
-     beautifulsoup4  \
-     sphinx \
-     sphinx-c-autodoc \
-     sphinx-copybutton \
-     sphinx-favicon \
-     sphinxcontrib-programoutput
+     beautifulsoup4==4.12.2  \
+     clang==16.0.1.1 \
+     sphinx==7.2.6 \
+     sphinx-c-autodoc==1.3.0 \
+     sphinx-copybutton==0.5.2 \
+     sphinx-favicon==1.0.1 \
+     sphinxcontrib-programoutput==0.17
 
 # install sphinx-c-autodoc dependedncies
 RUN wget -qO- https://apt.llvm.org/llvm-snapshot.gpg.key | sudo tee /etc/apt/trusted.gpg.d/apt.llvm.org.asc \
@@ -99,7 +96,7 @@ deb-src http://apt.llvm.org/jammy/ llvm-toolchain-jammy-16 main\n\
 ENV SPHINX_VENV="/home/$USER/.venv/"
 ENV LOG4C_RCPATH="/base/elos/src/demo/elos_log4c_demo"
 
-WORKDIR /build/safu
+WORKDIR /build
 
 CMD /bin/bash
 
