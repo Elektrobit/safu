@@ -25,11 +25,11 @@ void safuTestSafuJsonAddNewTimestampErrNoTimespecObject(void **state) {
     assert_non_null(jobj);
 
     const char *testRows[] = {
-        "zero,zero",     "zero,some",        "zero/max",          "zero|min",        "zero minus",
-        "stuff-nothing", "stuff_stuff",      "stuff, Max",        "stuff MINIMUM",   "somthing and somthing negativ",
-        "Maximum:0",     "Maximum|fortytwo", "Maximum+Maximum",   "MaximumMinimum",  "Maximum|minus",
-        "Mini/zero",     "Mini fortytwo",    "Mini|Maximum",      "Mini*2",          "Mini\\Negativ",
-        "negativ!zero",  "negativ fortytwo", "negativ!INT64_MAX", "negativ Minimum", "negativ!negativ",
+        "zero,zero",     "zero,some",        "zero/max",           "zero|min",        "zero minus",
+        "stuff-nothing", "stuff_stuff",      "stuff, Max",         "stuff MINIMUM",   "somthing and somthing negativ",
+        "Maximum:0",     "Maximum|fortytwo", "Maximum+Maximum",    "MaximumMinimum",  "Maximum|minus",
+        "Mini/zero",     "Mini fortytwo",    "Mini|Maximum",       "Mini*2",          "Mini\\Negativ",
+        "negativ!zero",  "negativ fortytwo", "negativ!INTMAX_MAX", "negativ Minimum", "negativ!negativ",
     };
 
     for (size_t i = 0; i < ARRAY_SIZE(testRows); i++) {
