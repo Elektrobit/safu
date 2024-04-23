@@ -23,7 +23,7 @@ void safuTestSafuJsonGetTimestampErrNoFullTimestampArray(void **state) {
     assert_non_null(jobj);
 
     int64_t testRows[] = {
-        0, 42, INT64_MAX, INT64_MIN, -12,
+        0, 42, INTMAX_MAX, INTMAX_MIN, -12,
     };
     for (size_t i = 0; i < ARRAY_SIZE(testRows); i++) {
         struct json_object *array = json_object_new_array();
