@@ -35,11 +35,11 @@ void safuTestSafuJsonAddNewTimestampErrCreateSecArray(void **state) {
     assert_non_null(jobj);
 
     const struct timespec testRows[] = {
-        {0, 0},         {0, 42},         {0, INT64_MAX},         {0, INT64_MIN},         {0, -12},
-        {42, 0},        {42, 42},        {42, INT64_MAX},        {42, INT64_MIN},        {42, -12},
-        {INT64_MAX, 0}, {INT64_MAX, 42}, {INT64_MAX, INT64_MAX}, {INT64_MAX, INT64_MIN}, {INT64_MAX, -12},
-        {INT64_MIN, 0}, {INT64_MIN, 42}, {INT64_MIN, INT64_MAX}, {INT64_MIN, INT64_MIN}, {INT64_MIN, -12},
-        {-12, 0},       {-12, 42},       {-12, INT64_MAX},       {-12, INT64_MIN},       {-12, -12},
+        {0, 0},          {0, 42},          {0, INTMAX_MAX},          {0, INTMAX_MIN},          {0, -12},
+        {42, 0},         {42, 42},         {42, INTMAX_MAX},         {42, INTMAX_MIN},         {42, -12},
+        {INTMAX_MAX, 0}, {INTMAX_MAX, 42}, {INTMAX_MAX, INTMAX_MAX}, {INTMAX_MAX, INTMAX_MIN}, {INTMAX_MAX, -12},
+        {INTMAX_MIN, 0}, {INTMAX_MIN, 42}, {INTMAX_MIN, INTMAX_MAX}, {INTMAX_MIN, INTMAX_MIN}, {INTMAX_MIN, -12},
+        {-12, 0},        {-12, 42},        {-12, INTMAX_MAX},        {-12, INTMAX_MIN},        {-12, -12},
     };
     for (size_t i = 0; i < ARRAY_SIZE(testRows); i++) {
         _testCase(jobj, i, testRows[i]);

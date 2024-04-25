@@ -26,7 +26,7 @@ void safuTestSafuJsonGetTimestampErrNoFullTimestampObject(void **state) {
         char *name;
         uint64_t time;
     } testRows[] = {
-        {"zero,zero", 0}, {"zero,some", 42}, {"zero/max", INT64_MAX}, {"zero|min", INT64_MIN}, {"zero minus", -12},
+        {"zero,zero", 0}, {"zero,some", 42}, {"zero/max", INTMAX_MAX}, {"zero|min", INTMAX_MIN}, {"zero minus", -12},
     };
 
     for (size_t i = 0; i < ARRAY_SIZE(testRows); i++) {
