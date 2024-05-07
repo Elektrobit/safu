@@ -1,0 +1,36 @@
+safu (0.53.0-5) unstable; urgency=medium
+
+  * Update gbp.conf with the new git branches.
+
+ -- Isaac True <isaac.true@emlix.com>  Tue, 07 May 2024 15:50:34 +0200
+
+safu (0.53.0-4) unstable; urgency=medium
+
+  * Remove the following packages from the build dependencies, as they are now
+    pulled in by libcmocka-mocks-dev:
+      - libssl-dev
+      - libmnl-dev
+
+ -- Isaac True <isaac.true@emlix.com>  Tue, 07 May 2024 15:15:47 +0200
+
+safu (0.53.0-3) unstable; urgency=medium
+
+  * Add libcmocka-mocks-dev to libsafu-dev dependencies.
+  * Add the following packages to the build dependencies:
+      - libssl-dev
+      - pkg-config
+      - libmnl-dev
+
+ -- Isaac True <isaac.true@emlix.com>  Tue, 07 May 2024 14:48:26 +0200
+
+safu (0.53.0-2) unstable; urgency=medium
+
+  * Add gbp.conf
+
+ -- Isaac True <isaac.true@emlix.com>  Tue, 07 May 2024 14:16:31 +0200
+
+safu (0.53.0-1) unstable; urgency=medium
+
+  * Initial release.
+
+ -- Isaac True <isaac.true@emlix.com>  Tue, 07 May 2024 14:16:15 +0200

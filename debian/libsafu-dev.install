@@ -1,0 +1,5 @@
+usr/include/safu
+usr/lib/*/cmake
+usr/lib/*/pkgconfig
+usr/lib/*/libmock_safu.so
+usr/lib/*/libsafu.so
