@@ -22,16 +22,27 @@ Architecture: any
 Depends:
  ${misc:Depends},
  ${shlibs:Depends},
-Description: Library of common utility API's used in elos and samconf
+Description: Common utility API's used in elos and samconf
  Library of common utility API's used in elos and samconf.
  .
  Runtime library package.
+
+Package: libmock-safu0
+Architecture: any
+Depends:
+ ${misc:Depends},
+ ${shlibs:Depends},
+Description: Library of common utility API's used in elos and samconf (mocks)
+ Library of common utility API's used in elos and samconf.
+ .
+ Mock library package.
 
 Package: libsafu-dev
 Architecture: any
 Depends:
  ${misc:Depends},
  libsafu0 (= ${binary:Version}),
+ libmock-safu0 (= ${binary:Version}),
  libcmocka-mocks-dev,
 Description: Library of common utility API's used in elos and samconf (development)
  Library of common utility API's used in elos and samconf.

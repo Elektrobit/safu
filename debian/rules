@@ -21,3 +21,8 @@ override_dh_auto_build:
 	pandoc --from gfm --to rst \
 		-o debian/build/documentation/developer/index.rst \
 		debian/devdoc-index.md
+
+override_dh_clean:
+	dh_clean
+
+	rm -f documentation/images/*.png

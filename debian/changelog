@@ -1,3 +1,9 @@
+safu (0.53.0-7) UNRELEASED; urgency=medium
+
+  * Split libmock-safu0 libraries into their own package.
+
+ -- Isaac True <isaac.true@emlix.com>  Wed, 08 May 2024 14:56:24 +0200
+
 safu (0.53.0-6) unstable; urgency=medium
 
   * Add the following build dependencies:
