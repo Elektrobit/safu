@@ -22,6 +22,11 @@ override_dh_auto_build:
 		-o debian/build/documentation/developer/index.rst \
 		debian/devdoc-index.md
 
+override_dh_install:
+	dh_install
+	# Do not ship plantuml source files
+	find debian/ -name \*.plantuml -delete
+
 override_dh_clean:
 	dh_clean
 
