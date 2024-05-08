@@ -1,3 +1,12 @@
+safu (0.53.0-6) unstable; urgency=medium
+
+  * Add the following build dependencies:
+     -  pandoc
+     -  pandoc-plantuml-filter
+     -  graphviz
+
+ -- Isaac True <isaac.true@emlix.com>  Wed, 08 May 2024 14:05:37 +0200
+
 safu (0.53.0-5) unstable; urgency=medium
 
   * Update gbp.conf with the new git branches.

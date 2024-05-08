@@ -6,3 +6,4 @@
 /safu-doc/
 /.debhelper/
 /tmp/
+/*.debhelper.log
