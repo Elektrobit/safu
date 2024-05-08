@@ -27,6 +27,10 @@ override_dh_install:
 	# Do not ship plantuml source files
 	find debian/ -name \*.plantuml -delete
 
+override_dh_compress:
+	# Do not compress .md files
+	dh_compress --exclude=.md
+
 override_dh_clean:
 	dh_clean
 
