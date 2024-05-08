@@ -33,7 +33,7 @@ Depends:
  ${misc:Depends},
  libsafu0 (= ${binary:Version}),
  libcmocka-mocks-dev,
-Description: Library of common utility API's used in elos and samconf
+Description: Library of common utility API's used in elos and samconf (development)
  Library of common utility API's used in elos and samconf.
  .
  Development package.
@@ -42,7 +42,7 @@ Package: safu-doc
 Architecture: all
 Depends:
  ${misc:Depends},
-Description: Library of common utility API's used in elos and samconf
+Description: Library of common utility API's used in elos and samconf (documentation)
  Library of common utility API's used in elos and samconf.
  .
  Documentation package.
