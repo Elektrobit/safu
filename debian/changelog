@@ -1,3 +1,9 @@
+safu (0.53.0-8) unstable; urgency=medium
+
+  * Add safu-doc.lintian-overrides.
+
+ -- Isaac True <isaac.true@emlix.com>  Mon, 13 May 2024 16:34:01 +0200
+
 safu (0.53.0-7) unstable; urgency=medium
 
   * Split libmock-safu0 libraries into their own package.
