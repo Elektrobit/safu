@@ -1,12 +1,15 @@
+---
+variables:
+  DOCKER_HOST: "tcp://docker:2375"
 
 stages:
   - build
   - test
 
 default:
-  image: docker:latest
+  image: ubuntu:jammy
   services:
-    - name: docker:dind
+    - name: docker:24-dind
       alias: docker
       variables:
         DOCKER_TLS_CERTDIR: ""
@@ -14,7 +17,8 @@ default:
       - "docker"
 
 before_script:
-  - apk add --update curl bash jq && rm -rf /var/cache/apk/*
+  - apt-get update
+  - apt-get install -y curl bash jq docker.io
   - docker info
   - ip a
   - env | sort
@@ -120,3 +124,20 @@ documentation:
   artifacts:
     paths:
       - build/doc/
+
+build-deb-packages:
+  parallel:
+    matrix:
+      - OS: ubuntu
+        CODENAME: jammy
+      - OS: ubuntu
+        CODENAME: noble
+  # Override default before_script
+  before_script: ""
+  stage: build
+  image: ${OS}:${CODENAME}
+  script:
+    - ci/build_debs.sh ${CODENAME}
+  artifacts:
+    paths:
+      - ./*.deb
