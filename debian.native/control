@@ -53,6 +53,7 @@ Description: Library of common utility API's used in elos and samconf (developme
  Development package.
 
 Package: safu-doc
+Section: doc
 Architecture: all
 Depends:
  ${misc:Depends},
