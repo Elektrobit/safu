@@ -1,11 +1,11 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: cmocka_extensions
-Upstream-Contact: https://github.com/Elektrobit/cmocka_extensions/issues
-Source: https://github.com/Elektrobit/cmocka_extensions
+Upstream-Name: safu
+Upstream-Contact: https://github.com/Elektrobit/safu/issues
+Source: https://github.com/Elektrobit/safu
 
 Files: *
 Copyright: 2023, Elektrobit GmbH
- 2023, emlix GmbH
+           2023, emlix GmbH
 License: MIT
 
 License: MIT
