@@ -29,6 +29,7 @@ Description: Common utility API's used in elos and samconf
  Runtime library package.
 
 Package: libmock-safu0
+Section: libs
 Architecture: any
 Depends:
  ${misc:Depends},
