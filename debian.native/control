@@ -18,6 +18,7 @@ Vcs-Browser: https://github.com/Elektrobit/safu
 Vcs-Git: https://github.com/Elektrobit/safu
 
 Package: libsafu0
+Section: libs
 Architecture: any
 Depends:
  ${misc:Depends},
