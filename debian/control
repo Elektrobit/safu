@@ -40,6 +40,7 @@ Description: Library of common utility API's used in elos and samconf (mocks)
  Mock library package.
 
 Package: libsafu-dev
+Section: libdevel
 Architecture: any
 Depends:
  ${misc:Depends},
