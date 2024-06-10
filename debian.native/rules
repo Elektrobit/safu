@@ -1,0 +1,37 @@
+#!/usr/bin/make -f
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all optimize=-lto
+
+%:
+	dh $@ --buildsystem=cmake --builddirectory=debian/build
+
+override_dh_auto_build:
+	dh_auto_build -- all safu_doc
+
+	mkdir -p debian/build/documentation/developer
+
+	pandoc --from gfm --to rst \
+		-o debian/build/documentation/developer/DeveloperManual.rst \
+		documentation/developer.md
+
+	pandoc --from gfm --to rst \
+		-o debian/build/documentation/developer/documentation.rst \
+		documentation/documentation.md
+
+	pandoc --from gfm --to rst \
+		-o debian/build/documentation/developer/index.rst \
+		debian/devdoc-index.md
+
+override_dh_install:
+	dh_install
+	# Do not ship plantuml source files
+	find debian/ -name \*.plantuml -delete
+
+override_dh_compress:
+	# Do not compress .md files
+	dh_compress --exclude=.md
+
+override_dh_clean:
+	dh_clean
+
+	rm -f documentation/images/*.png

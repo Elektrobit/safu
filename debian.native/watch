@@ -1,0 +1,2 @@
+version=4
+https://github.com/Elektrobit/safu/tags .*/safu-(\d+).(\d+).(\d+).tar.gz

@@ -1,0 +1,59 @@
+Source: safu
+Section: admin
+Priority: optional
+Maintainer: Isaac True <isaac.true@emlix.com>
+Build-Depends:
+ debhelper-compat (= 13),
+ cmake,
+ git,
+ libcmocka-mocks-dev,
+ pkg-config,
+ pandoc,
+ pandoc-plantuml-filter,
+ graphviz,
+Rules-Requires-Root: no
+Standards-Version: 4.6.0.1
+Homepage: https://github.com/Elektrobit/safu
+Vcs-Browser: https://github.com/Elektrobit/safu
+Vcs-Git: https://github.com/Elektrobit/safu
+
+Package: libsafu0
+Architecture: any
+Depends:
+ ${misc:Depends},
+ ${shlibs:Depends},
+Description: Common utility API's used in elos and samconf
+ Library of common utility API's used in elos and samconf.
+ .
+ Runtime library package.
+
+Package: libmock-safu0
+Architecture: any
+Depends:
+ ${misc:Depends},
+ ${shlibs:Depends},
+Description: Library of common utility API's used in elos and samconf (mocks)
+ Library of common utility API's used in elos and samconf.
+ .
+ Mock library package.
+
+Package: libsafu-dev
+Architecture: any
+Depends:
+ ${misc:Depends},
+ libsafu0 (= ${binary:Version}),
+ libmock-safu0 (= ${binary:Version}),
+ libcmocka-mocks-dev,
+Description: Library of common utility API's used in elos and samconf (development)
+ Library of common utility API's used in elos and samconf.
+ .
+ Development package.
+
+Package: safu-doc
+Architecture: all
+Depends:
+ ${misc:Depends},
+Description: Library of common utility API's used in elos and samconf (documentation)
+ Library of common utility API's used in elos and samconf.
+ .
+ Documentation package.
