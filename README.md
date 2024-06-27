@@ -48,10 +48,17 @@ or use the CI hooks
 
 Scripts to be used by CI pipelines to build , run various tests and checks.
 
+### debian.native
+
+Contains Debian packaging scripts for building the current source tree as .deb
+packages. This is primarily for CI pipelines to automatically verify if the
+packages are buildable or if anything needs to be changed.
+
+See `debian.native/README.md` for more information.
+
 ### documentation
 
 More detailed documentation on the event logging and management system.
-
 
 ### src
 
@@ -98,6 +105,7 @@ elos is an  integrated part of EB corbos Linux – built on Ubuntu is an open-so
 * Daniel Glöckner
 * Fabian Godehardt
 * Friedrich Schwedler
+* Isaac True
 * Joerg Vehlow
 * Maryniuk Bogdan
 * Rainer Müller

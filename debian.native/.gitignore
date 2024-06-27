@@ -1,0 +1,10 @@
+/*.substvars
+/files
+/debhelper-build-stamp
+/libsafu0/
+/libsafu-dev/
+/libmock-safu0/
+/safu-doc/
+/.debhelper/
+/tmp/
+/*.debhelper.log
