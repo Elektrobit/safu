@@ -1,21 +1,26 @@
+---
+variables:
+  DOCKER_HOST: "tcp://docker:2375"
 
 stages:
   - build
   - test
 
 default:
-  image: docker:24-dind
+  image: ubuntu:jammy
   services:
     - name: docker:24-dind
       alias: docker
+      variables:
+        DOCKER_TLS_CERTDIR: ""
   tags:
-      - "shell"
+      - "docker"
 
 before_script:
-  - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
+  - apt-get update
+  - apt-get install -y curl bash jq docker.io
   - docker info
   - ip a
-  - ss -antup
   - env | sort
 
 build-dependencies:
@@ -119,3 +124,20 @@ documentation:
   artifacts:
     paths:
       - build/doc/
+
+build-deb-packages:
+  parallel:
+    matrix:
+      - OS: ubuntu
+        CODENAME: jammy
+      - OS: ubuntu
+        CODENAME: noble
+  # Override default before_script
+  before_script: ""
+  stage: build
+  image: ${OS}:${CODENAME}
+  script:
+    - ci/build_debs.sh ${CODENAME}
+  artifacts:
+    paths:
+      - ./*.deb

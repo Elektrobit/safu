@@ -1,3 +1,9 @@
+safu (0.54.1-1) UNRELEASED; urgency=medium
+
+  * New upstream tag 0.54.1
+
+ -- Isaac True <isaac.true@emlix.com>  Thu, 27 Jun 2024 13:47:51 +0000
+
 safu (0.53.0-8) unstable; urgency=medium
 
   * Add safu-doc.lintian-overrides.
