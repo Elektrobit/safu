@@ -15,9 +15,11 @@ RUN apt-get update \
     clang-tidy \
     cmake \
     curl \
+    debhelper \
     expat \
     gdb \
     git \
+    git-buildpackage \
     gnuplot \
     jq \
     libcmocka-dev \
@@ -88,7 +90,7 @@ RUN wget -qO- https://apt.llvm.org/llvm-snapshot.gpg.key | sudo tee /etc/apt/tru
 # for llvm 16 packages\n\
 deb http://apt.llvm.org/jammy/ llvm-toolchain-jammy-16 main\n\
 deb-src http://apt.llvm.org/jammy/ llvm-toolchain-jammy-16 main\n\
-" | sudo tee /etc/apt/sources.list \
+" | sudo tee -a /etc/apt/sources.list \
   && sudo apt-get update \
   && sudo apt-get install -y libclang1-16 \
   && sudo ln -s /usr/lib/x86_64-linux-gnu/libclang-16.so.1 /usr/lib/libclang-16.so
