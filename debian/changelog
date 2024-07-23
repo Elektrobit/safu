@@ -1,6 +1,5 @@
-safu (0.55.0-1) UNRELEASED; urgency=medium
+safu (0.55.0-1) unstable; urgency=medium
 
-  * New upstream tag 0.54.1
   * New upstream tag 0.55.0
 
  -- Isaac True <isaac.true@emlix.com>  Fri, 19 Jul 2024 10:23:17 +0000
