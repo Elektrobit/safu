@@ -1,13 +1,19 @@
 ---
 variables:
   DOCKER_HOST: "tcp://docker:2375"
+  DOCKER_IMAGE: safu-ci:$CI_COMMIT_REF_SLUG
+
+workflow:
+  auto_cancel:
+    on_new_commit: interruptible
 
 stages:
+  - docker-image
   - build
   - test
 
 default:
-  image: ubuntu:jammy
+  image: $CI_REGISTRY_IMAGE/$DOCKER_IMAGE
   services:
     - name: docker:24-dind
       alias: docker
@@ -15,19 +21,32 @@ default:
         DOCKER_TLS_CERTDIR: ""
   tags:
       - "docker"
+  interruptible: true
 
 before_script:
-  - apt-get update
-  - apt-get install -y curl bash jq docker.io
-  - docker info
-  - ip a
   - env | sort
+
+build-docker-image:
+  stage: docker-image
+  image: ubuntu:jammy
+  before_script:
+    - apt-get update
+    - apt-get install -y docker.io
+  script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker build -t $DOCKER_IMAGE -f ci/Dockerfile
+             --build-arg UID=$(id -u) --build-arg GID=$(id -g)
+             --build-arg ASMCOV_URI="$ASMCOV_URI"
+             ci/
+    - docker tag $DOCKER_IMAGE $CI_REGISTRY_IMAGE/$DOCKER_IMAGE
+    - docker push $CI_REGISTRY_IMAGE/$DOCKER_IMAGE
 
 build-dependencies:
   stage: build
-  needs: []
+  needs:
+    - build-docker-image
   script:
-    - ci/docker-run.sh ci/install_deps.py -c ci/dependencies_emlix.json
+    - ci/install_deps.py -c ci/dependencies_emlix.json
   artifacts:
     paths:
       - build/deps/lib/
@@ -35,9 +54,11 @@ build-dependencies:
 
 build-release:
   stage: build
-  needs: [build-dependencies]
+  needs:
+    - build-docker-image
+    - build-dependencies
   script:
-    - ci/docker-run.sh ci/build.sh --ci Release
+    - ci/build.sh --ci Release
   artifacts:
     paths:
       - build/Release/dist/
@@ -45,9 +66,11 @@ build-release:
 
 build-debug:
   stage: build
-  needs: [build-dependencies]
+  needs:
+    - build-docker-image
+    - build-dependencies
   script:
-    - ci/docker-run.sh ci/build.sh --ci Debug
+    - ci/build.sh --ci Debug
   artifacts:
     paths:
       - build/Debug/dist/
@@ -56,10 +79,11 @@ build-debug:
 unit-test-release:
   stage: test
   needs:
+    - build-docker-image
     - build-release
     - build-dependencies
   script:
-    - ci/docker-run.sh ci/run_utest.sh Release
+    - ci/run_utest.sh Release
   artifacts:
     when: always
     paths:
@@ -70,10 +94,11 @@ unit-test-release:
 unit-test-debug:
   stage: test
   needs:
+    - build-docker-image
     - build-debug
     - build-dependencies
   script:
-    - ci/docker-run.sh ci/run_utest.sh Debug
+    - ci/run_utest.sh Debug
   artifacts:
     when: always
     paths:
@@ -84,43 +109,51 @@ unit-test-debug:
 code-lint:
   stage: test
   needs:
+    - build-docker-image
     - build-release
     - build-dependencies
   script:
-    - ci/docker-run.sh ci/code_lint.py --ci
-    - ci/docker-run.sh ci/checklicense.sh
+    - ci/code_lint.py --ci
+    - ci/checklicense.sh
   artifacts:
     when: always
     paths:
       - build/Release/cmake/lint_results/
 
 code-coverage:
-  rules:
-    - when: never
-      allow_failure: true
   stage: test
+  tags:
+    - "intelpt"
+    - "docker"
   needs:
+    - build-docker-image
     - build-release
     - build-dependencies
   script:
-    - ci/docker-run.sh ci/create_coverage.sh
+    - cat /proc/cpuinfo
+    - ls -lah /sys/devices/intel_pt
+    - ci/create_coverage.sh
   artifacts:
     when: always
     paths:
       - build/Release/result/coverage_results/
 
 publish-kpis:
-  rules:
-    - when: never
-      allow_failure: true
-  needs: [code-coverage]
+  stage: test
+  needs:
+    - build-release
+    - code-coverage
+  variables:
+    BRANCH_NAME: $CI_COMMIT_REF_NAME
   script:
-    - ci/publish_pkis.sh
+    - ci/publish_kpis.sh
 
 documentation:
   stage: build
+  needs:
+    - build-docker-image
   script:
-    - ci/docker-run.sh ci/build_doc.sh
+    - ci/build_doc.sh
   artifacts:
     paths:
       - build/doc/
@@ -135,6 +168,7 @@ build-deb-packages:
   # Override default before_script
   before_script: ""
   stage: build
+  needs: []
   image: ${OS}:${CODENAME}
   script:
     - ci/build_debs.sh ${CODENAME}
