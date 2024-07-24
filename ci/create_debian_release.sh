@@ -20,6 +20,8 @@ function setup_env() {
 
   git config --local user.name "${GIT_AUTHOR_NAME}"
   git config --local user.email "${GIT_AUTHOR_EMAIL}"
+
+  export SAFU_DEPENDENCY_CONFIG=./ci/dependencies_emlix.json
 }
 
 function create_and_publish_debian_main() {
@@ -32,7 +34,7 @@ function create_and_publish_debian_main() {
   rm debian/README.md
   echo "3.0 (quilt)" > debian/source/format
 
-  dch -M "--newversion=${NEW_VERSION}-1" "New upstream tag ${NEW_VERSION}"
+  dch -M -D unstable --newversion="${NEW_VERSION}-1" "New upstream tag ${NEW_VERSION}"
   git add debian/ && git commit -m "New upstream tag ${NEW_VERSION}"
   git checkout HEAD -- debian.native && git clean -fxd -- debian.native
 }
