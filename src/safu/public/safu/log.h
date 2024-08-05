@@ -59,7 +59,7 @@ safuLogStatusE_t safuLogFuncF(safuLogLevelE_t level, const char *file, const cha
 safuLogStatusE_t safuLogFunc(safuLogLevelE_t level, const char *file, const char *func, unsigned int line,
                              const char *fmt) __attribute__((__format__(__printf__, 5, 0)));
 
-__BEGIN_DECLS
+__END_DECLS
 
 #define safuLogCrit(__message) safuLogFunc(SAFU_LOG_LEVEL_CRIT, __FILE__, __func__, __LINE__, __message)
 #define safuLogCritF(__message, ...) \
