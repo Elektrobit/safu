@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: MIT
 if(NOT CMAKE_CROSSCOMPILING)
-  find_package(cmocka 1.1.5)
+  find_package(cmocka 1.1.5 REQUIRED)
   # get cmocka
   if(NOT cmocka_FOUND)
     message(STATUS "CMocka >=1.1.5 was not found, building static version")
