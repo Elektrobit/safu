@@ -93,6 +93,7 @@ and call `install_deps.py` like :
    SOURCES_URI=https://${GIT_USER_TOKEN}@github.com/Elektrobit/
 
 These dependencies get installed into `build/deps/` and if provided with an URL the sources can be found in `build/deps/src`.
+To use binaries installed from dependencies add `build/deps/bin` to the `PATH` environment variable.
 
 `ci/build.sh`
 -------------
