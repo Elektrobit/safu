@@ -4,6 +4,7 @@
 #include <stdlib.h>
 
 #include "safu/log.h"
+#include "safu/result.h"
 
 safuResultE_t safuTimeGetLocalTime(struct tm *localTime) {
     time_t currentTimestamp = 0;
@@ -45,4 +46,14 @@ char *safuGetCurrentDateString(char *dateFormat) {
         }
     }
     return date;
+}
+
+safuResultE_t safuTimeSpecCompare(struct timespec const *a, struct timespec const *b, int *value) {
+    safuResultE_t result = SAFU_RESULT_FAILED;
+    if (a != NULL && b != NULL && value != NULL) {
+        *value = (a->tv_sec > b->tv_sec) - (a->tv_sec < b->tv_sec) +
+                 (a->tv_sec == b->tv_sec) * ((a->tv_nsec > b->tv_nsec) - (a->tv_nsec < b->tv_nsec));
+        result = SAFU_RESULT_OK;
+    }
+    return result;
 }
