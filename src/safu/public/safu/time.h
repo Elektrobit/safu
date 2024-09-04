@@ -17,13 +17,19 @@ char *safuGetCurrentDateString(char *dateFormat);
  *------------------------------------------------------------------
  * Description:  Compares two timespec timestamps
  *
+ * Input:
+ *   timeA (struct timespec):
+ *     the first timestamp to compare 1 if this is bigger/newer
+ *   timeB (struct timespec):
+ *     the second timestamp to compare -1 if this is bigger/newer
+ *
  * Return:
  *   the result of the comparison
- *     - 1 if a is more recent than b
- *     - 0 if a and be are the same
- *     - -1 if a is older than b
+ *     - 1 if timeA is more recent than timeB
+ *     - 0 if timeA and timeB are the same
+ *     - -1 if timeA is older than timeB
  ******************************************************************/
-int safuTimeSpecCompare(struct timespec a, struct timespec b);
+int safuTimeSpecCompare(struct timespec timeA, struct timespec timeB);
 
 __END_DECLS
 

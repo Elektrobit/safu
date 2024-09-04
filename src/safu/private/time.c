@@ -48,7 +48,7 @@ char *safuGetCurrentDateString(char *dateFormat) {
     return date;
 }
 
-int safuTimeSpecCompare(struct timespec a, struct timespec b) {
-    return (a.tv_sec > b.tv_sec) - (a.tv_sec < b.tv_sec) +
-           (a.tv_sec == b.tv_sec) * ((a.tv_nsec > b.tv_nsec) - (a.tv_nsec < b.tv_nsec));
+int safuTimeSpecCompare(struct timespec timeA, struct timespec timeB) {
+    return (timeA.tv_sec > timeB.tv_sec) - (timeA.tv_sec < timeB.tv_sec) +
+           (timeA.tv_sec == timeB.tv_sec) * ((timeA.tv_nsec > timeB.tv_nsec) - (timeA.tv_nsec < timeB.tv_nsec));
 }
