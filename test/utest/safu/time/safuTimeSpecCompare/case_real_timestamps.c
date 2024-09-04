@@ -23,8 +23,9 @@ void safuTestSafuTimeSpecCompareRealTimestamps(void **state) {
     int result;
     struct timespec *olderTimestamp = *state;
     struct timespec newerTimestamp = {0};
-    if (!clock_gettime(CLOCK_REALTIME, &newerTimestamp)) {
+    if (clock_gettime(CLOCK_REALTIME, &newerTimestamp) != 0) {
         print_error("failed to get newer time stamp for tests");
+        fail();
     }
 
     result = safuTimeSpecCompare(newerTimestamp, *olderTimestamp);

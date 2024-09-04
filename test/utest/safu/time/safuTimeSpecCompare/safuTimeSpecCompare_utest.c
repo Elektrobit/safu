@@ -18,8 +18,9 @@ int main() {
 
 static int _testSuiteSafuTimeSpecCompareSetup(void **state) {
     struct timespec *olderTimestamp = calloc(1, sizeof(struct timespec));
-    if (olderTimestamp != NULL && !clock_gettime(CLOCK_REALTIME, olderTimestamp)) {
+    if (olderTimestamp != NULL && clock_gettime(CLOCK_REALTIME, olderTimestamp) != 0) {
         print_error("failed to get older time stamp for tests");
+        fail();
     }
     *state = olderTimestamp;
     return 0;
