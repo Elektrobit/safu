@@ -52,3 +52,8 @@ int safuTimeSpecCompare(struct timespec timeA, struct timespec timeB) {
     return (timeA.tv_sec > timeB.tv_sec) - (timeA.tv_sec < timeB.tv_sec) +
            (timeA.tv_sec == timeB.tv_sec) * ((timeA.tv_nsec > timeB.tv_nsec) - (timeA.tv_nsec < timeB.tv_nsec));
 }
+
+bool safuTimeSpecInTimeRange(struct timespec newest, struct timespec check, struct timespec oldest) {
+    return (((newest.tv_sec == 0 && newest.tv_nsec == 0) || safuTimeSpecCompare(newest, check) >= 0) &&
+            ((oldest.tv_sec == 0 && oldest.tv_nsec == 0) || safuTimeSpecCompare(check, oldest) > 0));
+}
