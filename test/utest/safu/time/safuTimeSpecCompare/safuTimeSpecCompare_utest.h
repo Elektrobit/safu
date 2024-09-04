@@ -4,6 +4,8 @@
 
 #include <cmocka_extensions/cmocka_extensions.h>
 
-TEST_CASE_FUNC_PROTOTYPES(safuTestSafuTimeSpecCompareSuccess)
+TEST_CASE_FUNC_PROTOTYPES(safuTestSafuTimeSpecCompareSelected)
+TEST_CASE_FUNC_PROTOTYPES(safuTestSafuTimeSpecCompareExhaustive)
+TEST_CASE_FUNC_PROTOTYPES(safuTestSafuTimeSpecCompareRealTimestamps)
 
 #endif /* __SAFU_TIME_SPEC_COMPARE_UTEST_H__*/
