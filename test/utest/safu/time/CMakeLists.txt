@@ -2,3 +2,4 @@
 
 add_subdirectory(safuTimeGetLocalTime)
 add_subdirectory(safuTimeSpecCompare)
+add_subdirectory(safuTimeSpecInTimeRange)
