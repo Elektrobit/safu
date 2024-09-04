@@ -5,6 +5,5 @@
 #include <cmocka_extensions/cmocka_extensions.h>
 
 TEST_CASE_FUNC_PROTOTYPES(safuTestSafuTimeSpecCompareSuccess)
-TEST_CASE_FUNC_PROTOTYPES(safuTestSafuTimeSpecCompareErrorParameter)
 
 #endif /* __SAFU_TIME_SPEC_COMPARE_UTEST_H__*/

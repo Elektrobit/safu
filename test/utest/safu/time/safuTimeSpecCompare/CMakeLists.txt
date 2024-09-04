@@ -6,7 +6,6 @@ create_unit_test(
   	 test_common_safuTimeSpecCompare_utest
   SOURCES
     case_success.c
-    case_error_parameter.c
     safuTimeSpecCompare_utest.c
   LIBRARIES
     safu_weak
