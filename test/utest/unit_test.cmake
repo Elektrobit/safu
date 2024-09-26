@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: MIT
 if(NOT CMAKE_CROSSCOMPILING)
-  find_package(cmocka 1.1.5)
+  find_package(cmocka 1.1.5 REQUIRED)
   # get cmocka
   if(NOT cmocka_FOUND)
     message(STATUS "CMocka >=1.1.5 was not found, building static version")
@@ -10,7 +10,7 @@ if(NOT CMAKE_CROSSCOMPILING)
 else()
   find_package(cmocka 1.1.5 REQUIRED)
 endif()
-find_package(cmocka_extensions REQUIRED)
+find_package(cmocka_extensions 0.53.1 REQUIRED)
 
 function(create_unit_test)
   cmake_parse_arguments(PARSED_ARGS "" "NAME" "SOURCES;INCLUDES;LIBRARIES;DEFINITIONS" ${ARGN})
