@@ -77,7 +77,7 @@ function collect_coverage_kpis {
 
     echo "tested coverage: $TESTED_COVERAGE"
     echo "total coverage: $TOTAL_COVERAGE"
-    add_kpi "elos_tools.safu.coverage" "$RESULT_DIR" "public_functions=$PUBLIC_FUNCTION_COUNT,tested_public_functions=$TESTED_PUBLIC_FUNCTION_COUNT,local_functions=$LOCAL_FUNCTION_COUNT,average_coverage=$TOTAL_COVERAGE,average_tested_coverage=$TESTED_COVERAGE"
+    add_kpi "safu.coverage" "$RESULT_DIR" "public_functions=$PUBLIC_FUNCTION_COUNT,tested_public_functions=$TESTED_PUBLIC_FUNCTION_COUNT,local_functions=$LOCAL_FUNCTION_COUNT,average_coverage=$TOTAL_COVERAGE,average_tested_coverage=$TESTED_COVERAGE"
 
     rm /tmp/symbols.log
 }
