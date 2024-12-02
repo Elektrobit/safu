@@ -17,6 +17,7 @@ macro(project_set_environment)
   include(GNUInstallDirs)
 
   option(SAFU_BUILD_DEFAULTS "enable all default builds" ON)
+  option(SAFU_LOG "Enable the logging functions" OFF)
 
   option(ENABLE_ANALYZER "Build with -fanalyzer" ON)
   option(ENABLE_CI "Use CI mode for building" OFF)
