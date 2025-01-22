@@ -8,7 +8,7 @@ set(SAFU_HARDWAREID_DEFAULT_VALUE "INVALID")
 set(SAFU_HARDWAREID_ENVIRONMENT_PREFIX "SAFU_HARDWAREID_")
 
 if (SAFU_LOG)
-  target_compile_definitions(safu PRIVATE SAFU_LOG="LOG")
+  target_compile_definitions(safu PRIVATE SAFU_LOG=1)
 endif (SAFU_LOG)
 set(SAFU_LOG_PREFIX "[SAFU] ")
 

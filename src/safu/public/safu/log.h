@@ -61,7 +61,7 @@ safuLogStatusE_t safuLogFunc(safuLogLevelE_t level, const char *file, const char
 
 __END_DECLS
 
-#ifdef SAFU_LOG
+#if SAFU_LOG == 1
 
 #define safuLogCrit(__message) safuLogFunc(SAFU_LOG_LEVEL_CRIT, __FILE__, __func__, __LINE__, __message)
 #define safuLogCritF(__message, ...) \
