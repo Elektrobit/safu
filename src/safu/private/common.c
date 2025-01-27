@@ -289,11 +289,11 @@ const char *safuGetHardwareId(void) {
         bytes = safuReadFileToString(hardwareIdFile, maxLength, &buffer);
         if (bytes < minLength) {
             if (bytes < 0) {
-                const char err[] = "safuReadFileToString failed, using default value '%s' (file: '%s')";
-                safuLogErrF(err, SAFU_HARDWAREID_DEFAULT_VALUE, hardwareIdFile);
+                safuLogErrF("safuReadFileToString failed, using default value '%s' (file: '%s')",
+                            SAFU_HARDWAREID_DEFAULT_VALUE, hardwareIdFile);
             } else {
-                const char err[] = "hardwareId too short (%ld), using default value '%s' (file: '%s')";
-                safuLogErrF(err, bytes, SAFU_HARDWAREID_DEFAULT_VALUE, hardwareIdFile);
+                safuLogErrF("hardwareId too short (%ld), using default value '%s' (file: '%s')", bytes,
+                            SAFU_HARDWAREID_DEFAULT_VALUE, hardwareIdFile);
             }
             strcpy(hardwareIdString, SAFU_HARDWAREID_DEFAULT_VALUE);
         } else {
