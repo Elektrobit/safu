@@ -72,4 +72,19 @@
         }                                                                     \
     }
 
+#define SAFU_PTHREAD_COND_INIT_WITH_RESULT(__cond, __condattr, __result) \
+    if (pthread_cond_init(__cond, __condattr) < 0) {                     \
+        (__result) = SAFU_RESULT_FAILED;                                 \
+        safuLogCritF("pthread_cond_init failed! - %s", strerror(errno)); \
+        raise(SIGTERM);                                                  \
+    } else {                                                             \
+        (__result) = SAFU_RESULT_OK;                                     \
+    }
+
+#define SAFU_PTHREAD_COND_DESTROY(__cond)                                   \
+    if (pthread_cond_destroy(__cond) < 0) {                                 \
+        safuLogCritF("pthread_cond_destroy failed! - %s", strerror(errno)); \
+        raise(SIGTERM);                                                     \
+    }
+
 #endif
