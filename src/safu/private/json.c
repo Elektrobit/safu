@@ -3,6 +3,7 @@
 
 #include <errno.h>
 #include <json-c/json.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -32,6 +33,23 @@ int safuJsonAddObject(struct json_object *jobj, const char *name, struct json_ob
     }
 
     return retval;
+}
+
+struct json_object *safuJsonAddNewBool(struct json_object *jobj, const char *name, bool val) {
+    struct json_object *jdata;
+
+    jdata = json_object_new_boolean(val);
+    if (!jdata) {
+        safuLogErr("json_object_new_boolean failed!");
+        return NULL;
+    }
+
+    if (safuJsonAddObject(jobj, name, jdata) < 0) {
+        json_object_put(jdata);
+        return NULL;
+    }
+
+    return jdata;
 }
 
 struct json_object *safuJsonAddNewInt(struct json_object *jobj, const char *name, int32_t val) {
@@ -176,6 +194,19 @@ struct json_object *safuJsonGetObject(const struct json_object *jobj, const char
     }
 
     return jdata;
+}
+
+int safuJsonGetBool(const struct json_object *jobj, const char *name, size_t idx, bool *val) {
+    struct json_object *jdata;
+
+    jdata = safuJsonGetObject(jobj, name, idx);
+    if (!jdata || json_object_get_type(jdata) != json_type_boolean) {
+        return -1;
+    }
+
+    *val = json_object_get_boolean(jdata) ? true : false;
+
+    return 0;
 }
 
 struct json_object *safuJsonGetArray(const struct json_object *jobj, const char *name, size_t idx, size_t *len) {
