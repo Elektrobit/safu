@@ -155,22 +155,24 @@ struct json_object *safuJsonAddNewObject(struct json_object *jobj, const char *n
 }
 
 struct json_object *safuJsonGetObject(const struct json_object *jobj, const char *name, size_t idx) {
-    const char *func;
     struct json_object *jdata;
 
-    if (name && json_object_get_type(jobj) == json_type_object) {
+    json_type jtype = json_object_get_type(jobj);
+    if (name && jtype == json_type_object) {
         jdata = json_object_object_get(jobj, name);
-        func = "json_object_object_get";
-    } else if (!name && json_object_get_type(jobj) == json_type_array) {
+    } else if (!name && jtype == json_type_array) {
         jdata = json_object_array_get_idx(jobj, idx);
-        func = "json_object_array_get_idx";
     } else {
         safuLogWarn("failed, wrong index type!");
         return NULL;
     }
 
     if (jdata == NULL) {
-        safuLogErrF("%s failed!", func);
+        if (jtype == json_type_object) {
+            safuLogErr("json_object_object_get failed!");
+        } else {
+            safuLogErr("json_object_array_get_idx failed!");
+        }
     }
 
     return jdata;

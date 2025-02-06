@@ -61,6 +61,8 @@ safuLogStatusE_t safuLogFunc(safuLogLevelE_t level, const char *file, const char
 
 __END_DECLS
 
+#if SAFU_LOG == 1
+
 #define safuLogCrit(__message) safuLogFunc(SAFU_LOG_LEVEL_CRIT, __FILE__, __func__, __LINE__, __message)
 #define safuLogCritF(__message, ...) \
     safuLogFuncF(SAFU_LOG_LEVEL_CRIT, __FILE__, __func__, __LINE__, __message, __VA_ARGS__)
@@ -86,5 +88,23 @@ __END_DECLS
 #define safuLogDebug(__message) safuLogFunc(SAFU_LOG_LEVEL_DEBUG, __FILE__, __func__, __LINE__, __message)
 #define safuLogDebugF(__message, ...) \
     safuLogFuncF(SAFU_LOG_LEVEL_DEBUG, __FILE__, __func__, __LINE__, __message, __VA_ARGS__)
+#else
+
+#define safuLogCrit(__message)
+#define safuLogCritF(__message, ...)
+#define safuLogErr(__message)
+#define safuLogErrF(__message, ...)
+#define safuLogErrValue(__message, __value)
+#define safuLogErrErrno(__message)
+#define safuLogErrErrnoValue(__message, __value)
+#define safuLogWarn(__message)
+#define safuLogWarnF(__message, ...)
+#define safuLogWarnErrnoValue(__message, __value)
+#define safuLogInfo(__message)
+#define safuLogInfoF(__message, ...)
+#define safuLogDebug(__message)
+#define safuLogDebugF(__message, ...)
+
+#endif
 
 #endif
