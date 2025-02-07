@@ -25,6 +25,7 @@ MOCK_FUNC_PROTOTYPE(safuJsonAddNewInt, struct json_object *, struct json_object 
 MOCK_FUNC_PROTOTYPE(safuJsonAddNewString, struct json_object *, struct json_object *jobj, const char *name,
                     const char *val)
 MOCK_FUNC_PROTOTYPE(safuJsonAddObject, int, struct json_object *jobj, const char *name, struct json_object *jdata)
+MOCK_FUNC_PROTOTYPE(safuJsonAddNewBool, struct json_object *, struct json_object *jobj, const char *name, bool val)
 MOCK_FUNC_PROTOTYPE(safuJsonAddNewInt64, struct json_object *, struct json_object *jobj, const char *name, int64_t val)
 MOCK_FUNC_PROTOTYPE(safuJsonAddNewUint64, struct json_object *, struct json_object *jobj, const char *name,
                     uint64_t val)
@@ -37,6 +38,7 @@ MOCK_FUNC_PROTOTYPE(safuJsonGetInt32, int, const struct json_object *jobj, const
 MOCK_FUNC_PROTOTYPE(safuJsonGetInt64, int, const struct json_object *jobj, const char *name, size_t idx, int64_t *val)
 MOCK_FUNC_PROTOTYPE(safuJsonGetObject, struct json_object *, const struct json_object *jobj, const char *name,
                     size_t idx)
+MOCK_FUNC_PROTOTYPE(safuJsonGetBool, int, const struct json_object *jobj, const char *name, size_t idx, bool *val)
 MOCK_FUNC_PROTOTYPE(safuJsonGetArray, struct json_object *, const struct json_object *jobj, const char *name,
                     size_t idx, size_t *len)
 MOCK_FUNC_PROTOTYPE(safuJsonGetUint32, int, const struct json_object *jobj, const char *name, size_t idx, uint32_t *val)

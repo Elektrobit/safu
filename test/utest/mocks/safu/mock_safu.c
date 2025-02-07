@@ -82,6 +82,16 @@ MOCK_FUNC_BODY(safuJsonAddObject, int, struct json_object *jobj, const char *nam
     return MOCK_FUNC_REAL(safuJsonAddObject)(jobj, name, jdata);
 }
 
+MOCK_FUNC_BODY(safuJsonAddNewBool, struct json_object *, struct json_object *jobj, const char *name, bool val) {
+    if (MOCK_IS_ACTIVE(safuJsonAddNewBool)) {
+        check_expected_ptr(jobj);
+        check_expected_ptr(name);
+        check_expected(val);
+        return mock_ptr_type(struct json_object *);
+    }
+    return MOCK_FUNC_REAL(safuJsonAddNewBool)(jobj, name, val);
+}
+
 MOCK_FUNC_BODY(safuJsonAddNewInt, struct json_object *, struct json_object *jobj, const char *name, int32_t val) {
     if (MOCK_IS_ACTIVE(safuJsonAddNewInt)) {
         check_expected_ptr(jobj);
@@ -190,6 +200,20 @@ MOCK_FUNC_BODY(safuJsonGetObject, struct json_object *, const struct json_object
         return mock_ptr_type(struct json_object *);
     }
     return MOCK_FUNC_REAL(safuJsonGetObject)(jobj, name, idx);
+}
+
+MOCK_FUNC_BODY(safuJsonGetBool, int, const struct json_object *jobj, const char *name, size_t idx, bool *val) {
+    if (MOCK_IS_ACTIVE(safuJsonGetBool)) {
+        check_expected_ptr(jobj);
+        check_expected_ptr(name);
+        check_expected(idx);
+        check_expected_ptr(val);
+        if (val != NULL) {
+            *val = mock_type(bool);
+        }
+        return mock_type(int);
+    }
+    return MOCK_FUNC_REAL(safuJsonGetBool)(jobj, name, idx, val);
 }
 
 MOCK_FUNC_BODY(safuJsonGetArray, struct json_object *, const struct json_object *jobj, const char *name, size_t idx,

@@ -2,6 +2,7 @@
 #pragma once
 
 #include <json-c/json_types.h>
+#include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <time.h>
@@ -73,6 +74,19 @@ struct json_object *safuJsonAddNewInt64(struct json_object *jobj, const char *na
  *      - Pointer to new json object
  ******************************************************************/
 struct json_object *safuJsonAddNewObject(struct json_object *jobj, const char *name);
+
+/*******************************************************************
+ * Add a bool value to a given json object.
+ *
+ * Parameters:
+ *      jobj (json_object *): Json object to which the boolean should be added.
+ *      name (const char *): Key to store the new boolean under.
+ *      val (bool): Value to store in the object.
+ * Returns:
+ *      - `NULL` in error case
+ *      - Pointer to json boolean
+ ******************************************************************/
+struct json_object *safuJsonAddNewBool(struct json_object *jobj, const char *name, bool val);
 
 /*******************************************************************
  * Add an json string value to a given json object.
@@ -175,6 +189,22 @@ struct json_object *safuJsonGetObject(const struct json_object *jobj, const char
  *      - Pointer to the requested json array.
  ******************************************************************/
 struct json_object *safuJsonGetArray(const struct json_object *jobj, const char *name, size_t idx, size_t *len);
+
+/*******************************************************************
+ * Get the value of a bool stored in a json object.
+ *
+ * Parameters:
+ *      jobj (json_object *): Json object from which to read the bool.
+ *      name (const char *): Key the bool is stored under,
+ *              if the given json object is an object(map)
+ *      val (size_t *): Index of the bool, if the given json object
+ *              is an array
+ *      val (bool *): Pointer to store the bool in.
+ * Returns:
+ *      - `0` in success case
+ *      - `-1` in error case
+ ******************************************************************/
+int safuJsonGetBool(const struct json_object *jobj, const char *name, size_t idx, bool *val);
 
 /*******************************************************************
  * Get the value of an unsigned 32-bit integer stored in a json object.
