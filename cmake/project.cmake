@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: MIT
-set(SAFU_VERSION 0.58.4)
+set(SAFU_VERSION 0.60.1)
 
 # Attention: Aside from the version, as many things as possible in this file
 #   should be put into functions, as this solves potential issues with commands
@@ -17,6 +17,7 @@ macro(project_set_environment)
   include(GNUInstallDirs)
 
   option(SAFU_BUILD_DEFAULTS "enable all default builds" ON)
+  option(SAFU_LOG "Enable the logging functions" OFF)
 
   option(ENABLE_ANALYZER "Build with -fanalyzer" ON)
   option(ENABLE_CI "Use CI mode for building" OFF)

@@ -28,7 +28,7 @@ jobs:
           git \
           locales \
           net-tools \
-          netcat \
+          netcat-openbsd \
           nodejs \
           pandoc \
           plantuml \
