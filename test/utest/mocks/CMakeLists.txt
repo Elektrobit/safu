@@ -31,6 +31,7 @@ create_mock_lib(
     safuSendExactly
     safuAllocMem
     safuJsonAddObject
+    safuJsonAddNewBool
     safuJsonAddNewInt
     safuJsonAddNewInt64
     safuJsonAddNewUint64
@@ -38,6 +39,7 @@ create_mock_lib(
     safuJsonAddNewArray
     safuJsonAddNewArrayOfInitialSize
     safuJsonAddNewTimestamp
+    safuJsonGetBool
     safuJsonGetInt32
     safuJsonGetInt64
     safuJsonGetObject
@@ -95,6 +97,7 @@ target_link_options(
    -Wl,--wrap=safuSendExactly
    -Wl,--wrap=safuAllocMem
    -Wl,--wrap=safuJsonAddObject
+   -Wl,--wrap=safuJsonAddNewBool
    -Wl,--wrap=safuJsonAddNewInt
    -Wl,--wrap=safuJsonAddNewInt64
    -Wl,--wrap=safuJsonAddNewUint64
@@ -102,6 +105,7 @@ target_link_options(
    -Wl,--wrap=safuJsonAddNewArray
    -Wl,--wrap=safuJsonAddNewArrayOfInitialSize
    -Wl,--wrap=safuJsonAddNewTimestamp
+   -Wl,--wrap=safuJsonGetBool
    -Wl,--wrap=safuJsonGetInt32
    -Wl,--wrap=safuJsonGetInt64
    -Wl,--wrap=safuJsonGetObject

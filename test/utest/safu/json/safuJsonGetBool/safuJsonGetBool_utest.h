@@ -1,0 +1,14 @@
+// SPDX-License-Identifier: MIT
+#ifndef SAFU_JSON_GET_BOOL_H
+#define SAFU_JSON_GET_BOOL_H
+
+#include "json_utest.h"
+
+TEST_CASE_FUNC_PROTOTYPES(safuTestSafuJsonGetBoolSuccessArray)
+TEST_CASE_FUNC_PROTOTYPES(safuTestSafuJsonGetBoolSuccessObject)
+TEST_CASE_FUNC_PROTOTYPES(safuTestSafuJsonGetBoolErrGetObjectFailedArray)
+TEST_CASE_FUNC_PROTOTYPES(safuTestSafuJsonGetBoolErrGetObjectFailedObject)
+TEST_CASE_FUNC_PROTOTYPES(safuTestSafuJsonGetBoolErrGetTypeArray)
+TEST_CASE_FUNC_PROTOTYPES(safuTestSafuJsonGetBoolErrGetTypeObject)
+
+#endif /* SAFU_JSON_GET_BOOL_H */
