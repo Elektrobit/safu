@@ -11,6 +11,10 @@ Different options on how to build
 Build Configurations
 ====================
 
+Make sure to install all dependencies
+
+`cmocka_extensions` & `cmocka_mocks`
+
 `cmake & make` without any options (default)
 --------------------------------------------
 
@@ -27,6 +31,11 @@ Everything is build in Debug mode.
    make -C build/ install
 
 Can be configured with the options described in section :ref:`cmake-options`.
+
+Alternatively use the CI hooks for developer setup
+
+./ci/install_deps.py
+./ci/build.sh [Release|Debug]
 
 `ci/install_deps.py`
 --------------------
@@ -177,4 +186,3 @@ ci/build.sh options
 - `--ci` enables `-DENABLE_CI` for cmake and implicitly sets `--clean --verbose`
 - `--clean|-c` deletes the build directory before the build for a fresh start
 - `--verbose|-v` adds `-v` to the parameters for ninja
-- `--package` implicitly sets the `BUILD_TYPE` to `Release` and adds `-D PACKAGING=true` to cmake. Also implicitly sets `--clean`
