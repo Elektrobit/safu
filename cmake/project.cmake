@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: MIT
-set(SAFU_VERSION 0.60.1)
+set(SAFU_VERSION 0.61.1)
 
 # Attention: Aside from the version, as many things as possible in this file
 #   should be put into functions, as this solves potential issues with commands

@@ -24,7 +24,3 @@ endif (UNIT_TESTS)
 
 add_subdirectory(src)
 add_subdirectory(test/utest)
-
-if(PACKAGING)
-  include(cmake/Packing.cmake)
-endif(PACKAGING)
