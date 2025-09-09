@@ -1,5 +1,8 @@
 # SPDX-License-Identifier: MIT
 add_subdirectory(safuAllocMem)
+add_subdirectory(safuBase64Encode)
+add_subdirectory(safuCheckBase64Encoding)
+add_subdirectory(safuBase64Decode)
 add_subdirectory(safuGetEnvOr)
 add_subdirectory(safuGetHardwareId)
 add_subdirectory(safuRecvExactly)
