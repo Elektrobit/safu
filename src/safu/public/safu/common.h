@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 #pragma once
 
+#include <safu/base64_types.h>
 #include <safu/defines.h>
 #include <safu/types.h>
 #include <stdio.h>
@@ -35,6 +36,54 @@ safuResultE_t safuStringIsEmpty(const char *stringToCheck);
  *      - pointer to newly allocated memory
  ******************************************************************/
 void *safuAllocMem(void *oldptr, size_t newlen);
+
+/*******************************************************************
+ * Encode given input as base64 string.
+ *
+ * Parameters:
+ *     inputData : the data to be encoded into base64
+ *     ilen : size of input data
+ *     output : pointer to pointer of base64 encoded value
+ *     olen : size of output string
+ *
+ * Returns:
+ *         pointer to pointer to string and string length – on success.
+ *         NULL pointer and length 0  – on failure.
+ *         SAFU_RESULT_OK – on success.
+ *         SAFU_RESULT_FAILED – on failure.
+ ******************************************************************/
+safuResultE_t safuBase64Encode(const void *inputData, size_t ilen, char **output, size_t *olen);
+
+/*******************************************************************
+ * Check if the given input string of specific length has valid base64
+ * encoding.
+ *
+ * Parameters:
+ *     input : base64 encoded data to be checked
+ *     ilen : size of input data
+ *
+ * Returns:
+ *         SAFU_RESULT_OK – on success.
+ *         SAFU_RESULT_FAILED – on failure.
+ ******************************************************************/
+safuResultE_t safuCheckBase64Encoding(const char *input, size_t ilen);
+
+/*******************************************************************
+ * Decode given base64 encoded input to data.
+ *
+ * Parameters:
+ *     input : the base64 data to be decoded
+ *     ilen : size of input data
+ *     output : pointer to pointer to decoded value of input data
+ *     olen : size of output
+ *
+ * Returns:
+ *         pointer to pointer to decoded data and length – on success.
+ *         NULL pointer and length 0  – on failure.
+ *         SAFU_RESULT_OK – on success.
+ *         SAFU_RESULT_FAILED – on failure.
+ ******************************************************************/
+safuResultE_t safuBase64Decode(const char *input, size_t ilen, unsigned char **output, size_t *olen);
 
 /*******************************************************************
  * Allows to transfer a precise length of data using a given transfer method that
