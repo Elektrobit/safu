@@ -1,3 +1,9 @@
+safu (0.63.1-1) unstable; urgency=medium
+
+  * New upstream tag 0.63.1
+
+ -- Isaac True <isaac.true@emlix.com>  Thu, 25 Sep 2025 14:45:01 +0000
+
 safu (0.62.0-1) unstable; urgency=medium
 
   * New upstream tag 0.62.0
