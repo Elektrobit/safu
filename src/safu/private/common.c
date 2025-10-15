@@ -63,6 +63,24 @@ void *safuAllocMem(void *oldptr, size_t newlen) {
     return newptr;
 }
 
+safuResultE_t safuStrdup(char **to, const char *from) {
+    safuResultE_t result = SAFU_RESULT_FAILED;
+
+    if (from == NULL || to == NULL) {
+        safuLogErr("invalid parameter");
+    } else {
+        char *str = strdup(from);
+        if (str == NULL) {
+            safuLogErr("strdup error");
+        } else {
+            *to = str;
+            result = SAFU_RESULT_OK;
+        }
+    }
+
+    return result;
+}
+
 safuResultE_t safuBase64Encode(const void *inputData, size_t ilen, char **output, size_t *olen) {
     safuResultE_t status = SAFU_RESULT_OK;
     char *buffer = NULL;

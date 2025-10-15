@@ -38,6 +38,21 @@ safuResultE_t safuStringIsEmpty(const char *stringToCheck);
 void *safuAllocMem(void *oldptr, size_t newlen);
 
 /*******************************************************************
+ * Return pointer 'to' which is a duplicate of string 'from'. This function is essentially a wrapper
+ * for the IOS C standard `strdup` command.
+ *
+ * Parameters:
+ *      to : pointer to duplicate of from
+ *      from : string to be duplicated
+ * Returns:
+ *         pointer to duplicate of string from – on success.
+ *         NULL pointer – on failure.
+ *         SAFU_RESULT_OK – on success.
+ *         SAFU_RESULT_FAILED – on failure.
+ ******************************************************************/
+safuResultE_t safuStrdup(char **to, const char *from);
+
+/*******************************************************************
  * Encode given input as base64 string.
  *
  * Parameters:
