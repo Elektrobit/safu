@@ -19,6 +19,7 @@ default:
       alias: docker
       variables:
         DOCKER_TLS_CERTDIR: ""
+      command: ["--tls=false"]
   tags:
       - "docker"
   interruptible: true
