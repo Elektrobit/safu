@@ -15,7 +15,7 @@ stages:
 default:
   image: $CI_REGISTRY_IMAGE/$DOCKER_IMAGE
   services:
-    - name: docker:24-dind
+    - name: docker:29-dind
       alias: docker
       variables:
         DOCKER_TLS_CERTDIR: ""
