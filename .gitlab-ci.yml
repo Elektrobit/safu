@@ -1,52 +1,54 @@
 ---
 variables:
-  DOCKER_HOST: "tcp://docker:2375"
-  DOCKER_IMAGE: safu-ci:$CI_COMMIT_REF_SLUG
+  # Runner will discover the UID and GID of the user configured in the image used by the build container
+  # and will change the ownership of the working directory and files by running the chmod command in the
+  # predefined container (after updating sources, restoring cache and downloading artifacts).
+  FF_DISABLE_UMASK_FOR_DOCKER_EXECUTOR: "true"
+  SOURCES_URI: "https://github/elektrobit"
+  SAFU_DEPENDENCY_CONFIG: "ci/dependency_default.json"
 
 workflow:
   auto_cancel:
     on_new_commit: interruptible
 
-stages:
-  - docker-image
-  - build
-  - test
-
 default:
-  image: $CI_REGISTRY_IMAGE/$DOCKER_IMAGE
-  services:
-    - name: docker:24-dind
-      alias: docker
-      variables:
-        DOCKER_TLS_CERTDIR: ""
   tags:
-      - "docker"
-  interruptible: true
-
-before_script:
-  - env | sort
+    - docker
+  image: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+  timeout: 1 hours
+  before_script:
+    - env | sort
 
 build-docker-image:
-  stage: docker-image
-  image: ubuntu:jammy
-  before_script:
-    - apt-get update
-    - apt-get install -y docker.io
+  stage: .pre
+  services:
+    - name: $CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX/docker:29-dind
+      variables:
+        DOCKER_TLS_CERTDIR: ""
+      # hostname of dind container inside the private network has to be "docker"
+      alias: docker
+      command: ["--tls=false"]
+  image: $CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX/docker:latest
   script:
-    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
-    - docker build -t $DOCKER_IMAGE -f ci/Dockerfile
-             --build-arg UID=$(id -u) --build-arg GID=$(id -g)
-             --build-arg ASMCOV_URI="$ASMCOV_URI"
-             ci/
-    - docker tag $DOCKER_IMAGE $CI_REGISTRY_IMAGE/$DOCKER_IMAGE
-    - docker push $CI_REGISTRY_IMAGE/$DOCKER_IMAGE
+    - echo "$CI_REGISTRY_PASSWORD" | docker login $CI_REGISTRY -u $CI_REGISTRY_USER --password-stdin
+    - echo "$CI_DEPENDENCY_PROXY_PASSWORD" | docker login $CI_DEPENDENCY_PROXY_SERVER -u $CI_DEPENDENCY_PROXY_USER --password-stdin
+
+    - docker build
+      --pull
+      --push
+      --cache-from $CI_REGISTRY_IMAGE:buildcache
+      --build-arg BUILDKIT_INLINE_CACHE=1
+      --build-arg CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX=$CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX/
+      --build-arg REPO=amd64
+      --build-arg UBUNTU_RELEASE=jammy
+      --tag $CI_REGISTRY_IMAGE:buildcache
+      --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+      -f ci/Dockerfile .
 
 build-dependencies:
   stage: build
-  needs:
-    - build-docker-image
   script:
-    - ci/install_deps.py -c ci/dependencies_emlix.json
+    - ci/install_deps.py
   artifacts:
     paths:
       - build/deps/lib/
@@ -55,7 +57,6 @@ build-dependencies:
 build-release:
   stage: build
   needs:
-    - build-docker-image
     - build-dependencies
   script:
     - ci/build.sh --ci Release
@@ -67,7 +68,6 @@ build-release:
 build-debug:
   stage: build
   needs:
-    - build-docker-image
     - build-dependencies
   script:
     - ci/build.sh --ci Debug
@@ -79,7 +79,6 @@ build-debug:
 unit-test-release:
   stage: test
   needs:
-    - build-docker-image
     - build-release
     - build-dependencies
   script:
@@ -94,7 +93,6 @@ unit-test-release:
 unit-test-debug:
   stage: test
   needs:
-    - build-docker-image
     - build-debug
     - build-dependencies
   script:
@@ -109,7 +107,6 @@ unit-test-debug:
 code-lint:
   stage: test
   needs:
-    - build-docker-image
     - build-release
     - build-dependencies
   script:
@@ -126,7 +123,6 @@ code-coverage:
     - "intelpt"
     - "docker"
   needs:
-    - build-docker-image
     - build-release
     - build-dependencies
   script:
@@ -150,8 +146,6 @@ publish-kpis:
 
 documentation:
   stage: build
-  needs:
-    - build-docker-image
   script:
     - ci/build_doc.sh
   artifacts:
